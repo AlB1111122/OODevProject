@@ -6,7 +6,11 @@ public class Dish{
     "Chips","Mashed potato","Steamed vegetables","Soda bread and butter",
     "Vanilla ice cream","Chocolate cake","Apple pie with whipped cream",
             "Coke","Sprite","Club orange","Rinforzo","Guinness","Hiniken"};
-    private double[] dishesPrice = new double[20];
+    private double[] dishesPrice = {5.50,4.00,6,4.25,
+                                12.20,10.50,8.80,7.50,13.05,
+                                3.60,3.00,2.50,4.20,
+                                5.50,5.40,5.40,
+                                1.80,1.60,1.70,3.10,2.90,1.50};
     private String dishName;
     private double price;
     private boolean ready;
