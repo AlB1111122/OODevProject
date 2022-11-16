@@ -1,5 +1,5 @@
 package com.example.oodevproj;
-
+import com.example.oodevproj.calender.ReservationCalendar;
 import java.util.ArrayList;
 
 public class Restaurant{
@@ -8,6 +8,8 @@ public class Restaurant{
     private ArrayList<Table> tables = new ArrayList<Table>();
     private ArrayList<Employee> employees = new ArrayList<Employee>();
     private ArrayList<Customer> customers = new ArrayList<Customer>();
+
+    private ReservationCalendar calendar = new ReservationCalendar();
 
 
     Restaurant(int restaurantID){
