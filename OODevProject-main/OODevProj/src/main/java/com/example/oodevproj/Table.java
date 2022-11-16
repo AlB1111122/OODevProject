@@ -19,15 +19,7 @@ public class Table{
         return seats;
     }
 
-    //public boolean getMovable(){
-    //    return movable;
-    //}
-
     public String toString(){
-        //String mov = "cannot be moved";
-        //if(movable){
-        //    mov = "can be moved";
-        //}
         return String.format("Table number: %d, Number of seats %d",tableID,seats);
     }
 }

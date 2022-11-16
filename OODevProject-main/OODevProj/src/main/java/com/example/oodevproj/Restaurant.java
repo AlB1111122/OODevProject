@@ -11,6 +11,7 @@ public class Restaurant{
 
 
     Restaurant(int restaurantID){
+        this.restaurantID = restaurantID;
     }
 
     public int getRestaurantID() {
