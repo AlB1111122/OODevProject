@@ -1,5 +1,11 @@
+package com.example.oodevproj;
+
 public class Dish{
-    private String[] dishes = new String[20];
+    private String[] dishes = {"BBQ wings","Spring rolls","Nachos","Bruschetta",
+            "Peperoni pizza","Margherita pizza","Cheese burger with lettuce and tomato","Vegetable soup","Carbonara","Steak served with roast vegtables",
+    "Chips","Mashed potato","Steamed vegetables","Soda bread and butter",
+    "Vanilla ice cream","Chocolate cake","Apple pie with whipped cream",
+            "Coke","Sprite","Club orange","Rinforzo","Guinness","Hiniken"};
     private double[] dishesPrice = new double[20];
     private String dishName;
     private double price;

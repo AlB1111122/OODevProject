@@ -1,3 +1,5 @@
+package com.example.oodevproj;
+
 public class Customer extends Person{
     private static int noCustomers = 0;
 
