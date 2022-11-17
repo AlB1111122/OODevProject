@@ -6,7 +6,6 @@ import com.example.oodevproj.calender.ReservationDate;
 import com.example.oodevproj.calender.ReservationTime;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public class Restaurant{
     private int restaurantID;

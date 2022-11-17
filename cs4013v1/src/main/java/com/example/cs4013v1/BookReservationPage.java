@@ -18,7 +18,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class BookReservationPage extends Application {
-
+    Restaurant restaurant;
     TextField numPeopleIn = new TextField();
     TextField dayIn = new TextField();
     TextField timeIn = new TextField();
@@ -75,19 +75,21 @@ public class BookReservationPage extends Application {
         dateTakenInfo.setTextFill(Color.color(1, 0, 0));
         dateTakenInfo.setAlignment(Pos.BOTTOM_CENTER);
         FlowPane base = new FlowPane(grid,dateTakenInfo);
-        base.setAlignment(Pos.CENTER);
+        base.setAlignment(Pos.TOP_CENTER);
 
         book.setOnAction(new ReservationController());
 
-        Scene pageBase = new Scene(base,620,200);
+        Scene pageBase = new Scene(base,620,183);
         stage.setScene(pageBase);
         stage.show();
     }
     public static void main(String[] args) {
         launch();
     }
+    public void setResturaunt(Restaurant restaurant){
+        this.restaurant = restaurant;
+    }
 
-    Restaurant r = new Restaurant(1);
     public class ReservationController implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent e) {
@@ -108,7 +110,7 @@ public class BookReservationPage extends Application {
                 phNo = getPhoneNo();
                 phoneNumerIn.setBackground(Background.fill(Color.WHITE));
                 dateTakenInfo.setTextFill(Color.BLACK);
-                dateTakenInfo.setText(r.addReservations(noP,date,time,phNo,name));
+                dateTakenInfo.setText(restaurant.addReservations(noP,date,time,phNo,name));
             }catch(IOException ex){
                 dateTakenInfo.setText(ex.getMessage());
             }
