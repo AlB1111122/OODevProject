@@ -7,8 +7,6 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="cs4013v1" />
-        <module name="OODevProj (1)" />
-        <module name="OODevProj" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/OODevProj/OODevProj.iml" filepath="$PROJECT_DIR$/OODevProj/OODevProj.iml" />
-      <module fileurl="file://$PROJECT_DIR$/OODevProject-main/OODevProj/OODevProj (1).iml" filepath="$PROJECT_DIR$/OODevProject-main/OODevProj/OODevProj (1).iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/OODevProject.iml" filepath="$PROJECT_DIR$/.idea/OODevProject.iml" />
       <module fileurl="file://$PROJECT_DIR$/cs4013v1/cs4013v1.iml" filepath="$PROJECT_DIR$/cs4013v1/cs4013v1.iml" />
     </modules>

@@ -96,7 +96,9 @@ public class Restaurant{
             try {
                 Reservation r = new Reservation(cal.getReservations().size() + 1, numPeople, date, time, booking.getTableID(), customerId);
                 cal.add(r);
-                return "Booking successful! you will shortly receive a text confirming your booking, and an hour before to remind you";
+                return String.format("Sucsessfully reserved a table for %d at %s on %s!\n" +
+                        "You will shortly receive a text confirming your booking, and an hour before to remind you"
+                        ,numPeople,time.toString(),date.toString());
             } catch (RuntimeException ex) {
                 return ex.getMessage();
             }
@@ -106,7 +108,8 @@ public class Restaurant{
 
     private boolean checkScheduleForConflict(ReservationTime time, ReservationDate date){
         for(Reservation res:cal.getReservationsForDay(date)){
-            if (time.getTimeMin() > res.getFromMin() && time.getTimeMin() < res.getToMin()) {
+            if (time.getTimeMin() > res.getFromMin() && time.getTimeMin() < res.getToMin() ||
+                    (time.getTimeMin() + 120) > res.getFromMin() && (time.getTimeMin() + 120) < res.getToMin() ) {
                 return true;
             }
         }

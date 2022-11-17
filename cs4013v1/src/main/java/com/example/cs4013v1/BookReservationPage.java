@@ -75,6 +75,7 @@ public class BookReservationPage extends Application {
         dateTakenInfo.setTextFill(Color.color(1, 0, 0));
         dateTakenInfo.setAlignment(Pos.BOTTOM_CENTER);
         FlowPane base = new FlowPane(grid,dateTakenInfo);
+        base.setAlignment(Pos.CENTER);
 
         book.setOnAction(new ReservationController());
 
@@ -91,42 +92,94 @@ public class BookReservationPage extends Application {
         @Override
         public void handle(ActionEvent e) {
             int noP = 0;
-            try {
-                noP = Integer.parseInt(numPeopleIn.getText());
-                numPeopleIn.setBackground(null);
-            }catch(NumberFormatException ex){
-                dateTakenInfo.setText("Please double check the 'number of people' field");
-                numPeopleIn.setBackground(Background.fill(Color.color(1, 0, 0)));
-            }
-            int pNo = 0;
-            try {
-                pNo = Integer.parseInt(phoneNumerIn.getText());
-                numPeopleIn.setBackground(Background.fill(null));
-            }catch(NumberFormatException ex){
-                dateTakenInfo.setText("Please double check the phone number is correct");
-                phoneNumerIn.setBackground(Background.fill(Color.color(1, 0, 0)));
-            }
             ReservationDate date = null;
-            try{
-                date = new ReservationDate(dayIn.getText());
-                numPeopleIn.setBackground(Background.fill(null));
-            }catch(RuntimeException ex){
-                dateTakenInfo.setText(ex.getMessage());
-                dayIn.setBackground(Background.fill(Color.color(1, 0, 0)));
-            }
             ReservationTime time = null;
-            try{
-                time = new ReservationTime(timeIn.getText());
-                numPeopleIn.setBackground(Background.fill(null));
-            }catch(RuntimeException ex){
+            String name = null;
+            int phNo = 0;
+            try {
+                noP = numPeople();
+                numPeopleIn.setBackground(Background.fill(Color.WHITE));
+                date = getDate();
+                dayIn.setBackground(Background.fill(Color.WHITE));
+                time = getTime();
+                timeIn.setBackground(Background.fill(Color.WHITE));
+                name = getName();
+                nameIn.setBackground(Background.fill(Color.WHITE));
+                phNo = getPhoneNo();
+                phoneNumerIn.setBackground(Background.fill(Color.WHITE));
+                dateTakenInfo.setTextFill(Color.BLACK);
+                dateTakenInfo.setText(r.addReservations(noP,date,time,phNo,name));
+            }catch(IOException ex){
                 dateTakenInfo.setText(ex.getMessage());
+            }
+        }
+
+        private int numPeople()throws IOException{
+            String no = numPeopleIn.getText();
+            if (!no.isEmpty()) {
+                try {
+                    return Integer.parseInt(no);
+                }catch(NumberFormatException ex){
+                    numPeopleIn.setBackground(Background.fill(Color.color(1, 0, 0)));
+                    throw new IOException("Invalid number of people");
+                }
+            }else{
+                numPeopleIn.setBackground(Background.fill(Color.color(1, 0, 0)));
+                throw new IOException("Invalid number of people");
+            }
+        }
+
+        private ReservationDate getDate()throws IOException{
+            if (!dayIn.getText().isEmpty()) {
+                try {
+                    return new ReservationDate(dayIn.getText());
+                } catch (RuntimeException ex) {
+                    dayIn.setBackground(Background.fill(Color.color(1, 0, 0)));
+                    throw new IOException("Invalid date");
+                }
+            }else{
+                dayIn.setBackground(Background.fill(Color.color(1, 0, 0)));
+                throw new IOException("Invalid date");
+            }
+        }
+
+        private ReservationTime getTime()throws IOException{
+            if (!timeIn.getText().isEmpty()) {
+                try {
+                    return new ReservationTime(timeIn.getText());
+                } catch (RuntimeException ex) {
+                    timeIn.setBackground(Background.fill(Color.color(1, 0, 0)));
+                    throw new IOException("Invalid time");
+                }
+            }else{
                 timeIn.setBackground(Background.fill(Color.color(1, 0, 0)));
+                throw new IOException("Invalid time");
             }
-            if(nameIn.getText().isEmpty()){
+        }
+
+        private String getName()throws IOException{
+            String in = nameIn.getText();
+            if(!in.isEmpty() && !(in.matches("[a-zA-Z]"))){
+                return in;
+            }else{
                 nameIn.setBackground(Background.fill(Color.color(1, 0, 0)));
+                throw new IOException("Invalid name");
             }
-            numPeopleIn.setBackground(Background.fill(null));
-            r.addReservations(noP,date,time,pNo,nameIn.getText());
+        }
+
+        private int getPhoneNo()throws IOException{
+            String no = phoneNumerIn.getText();
+            if (!no.isEmpty()) {
+                try {
+                    return Integer.parseInt(no);
+                }catch(NumberFormatException ex){
+                    phoneNumerIn.setBackground(Background.fill(Color.color(1, 0, 0)));
+                    throw new IOException("Invalid phone number");
+                }
+            }else{
+                phoneNumerIn.setBackground(Background.fill(Color.color(1, 0, 0)));
+                throw new IOException("Invalid number of people");
+            }
         }
     }
 }
