@@ -10,7 +10,7 @@ public class Reservation{
    private int tableNo;
    private String customerId;
 
-   Reservation(int reservationId,int numPeople, ReservationDate day, ReservationTime time,int tableNo,String customerId){
+   public Reservation(int reservationId,int numPeople, ReservationDate day, ReservationTime time,int tableNo,String customerId){
       this.reservationId = reservationId;
       this.numPeople = numPeople;
       this.day = day;

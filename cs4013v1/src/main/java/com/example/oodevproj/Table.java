@@ -3,7 +3,6 @@ package com.example.oodevproj;
 public class Table{
     private int tableID;
     private int seats;
-    //private boolean movable;
 
     Table(int seats, int tableID){
         this.tableID = tableID;

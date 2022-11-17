@@ -6,7 +6,7 @@ public class ReservationTime{
    private int hours;
    private int minutes;
 
-   ReservationTime(String input){
+   public ReservationTime(String input){
       StringTokenizer in = new StringTokenizer(input, ":");
       if(in.countTokens() < 2 || in.countTokens() > 2){
          throw new RuntimeException("not a valid time");

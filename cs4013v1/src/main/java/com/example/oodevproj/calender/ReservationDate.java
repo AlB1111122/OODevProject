@@ -7,7 +7,7 @@ public class ReservationDate{
    private int month;
    private int day;
 
-   ReservationDate(String input){
+   public ReservationDate(String input){
       StringTokenizer in = new StringTokenizer(input, "/");
       if(in.countTokens() < 3 || in.countTokens() > 3){
          throw new RuntimeException("not a valid date");
