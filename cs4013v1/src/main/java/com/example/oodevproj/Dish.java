@@ -15,7 +15,7 @@ public class Dish{
     private String notes;
 
 
-    public Dish(int selection){//reset to not be public later for testing purposes
+    Dish(int selection){//reset to not be public later for testing purposes
         dishName = dishes[selection];
         price = dishesPrice[selection];
         ready = false;

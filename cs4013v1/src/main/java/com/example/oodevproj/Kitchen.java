@@ -9,11 +9,11 @@ public class Kitchen {
     private ArrayList<Order> orders = new ArrayList<>();
     public void setCooking(int selection) throws RuntimeException{
             cookingDishes.add(watingDish.get(selection - 1));
-            watingDish.remove(watingDish.get(selection - 1));
+            watingDish.remove(selection - 1);
     }
 
     public void setDishReady(int selection){
-        Dish d = cookingDishes.remove(selection - 1);
+        Dish d = cookingDishes.get(selection - 1);
         readyDishes.add(d);
         cookingDishes.remove(selection - 1);
         d.setReady();

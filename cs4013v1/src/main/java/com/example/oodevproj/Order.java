@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 public class Order{
     private int orderId;
-    private String tableID;
+    private int tableID;
     private Customer customer;
     private ArrayList<Dish> dishes = new ArrayList<Dish>();
     private boolean ready;
-    public Order(String tableID, Customer customer){//public for testing reset later
+    Order(int tableID, Customer customer){//public for testing reset later
         this.customer = customer;
         this.tableID = tableID;
         ready = false;
@@ -26,11 +26,11 @@ public class Order{
         return customer;
     }
 
-    public String getTableID() {
+    public int getTableID() {
         return tableID;
     }
 
-    public void setTableID(String tableID) {
+    public void setTableID(int tableID) {
         this.tableID = tableID;
     }
 
