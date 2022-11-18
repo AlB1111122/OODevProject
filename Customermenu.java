@@ -32,7 +32,7 @@ public class   Customermenu {
 
 
         boolean more = true;
-            //  AppointmentCalendar calendar = new AppointmentCalendar();
+            
             //   customeer  review the menu
          // after select  item or dish
          // checch if the dish is in the kist of dish
