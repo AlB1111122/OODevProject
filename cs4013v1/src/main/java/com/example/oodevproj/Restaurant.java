@@ -13,7 +13,8 @@ public class Restaurant{
     private ArrayList<Table> tables = new ArrayList<Table>();
     private ArrayList<Employee> employees = new ArrayList<Employee>();
     private ArrayList<Customer> customers = new ArrayList<Customer>();
-    private ReservationCalendar cal = new ReservationCalendar();
+    private ReservationCalendar cal;
+    private Kitchen kitchen = new Kitchen();
     public Restaurant(int restaurantID){
         this.restaurantID = restaurantID;
     }
@@ -61,6 +62,10 @@ public class Restaurant{
 
     public ReservationCalendar getCalender(){
         return cal;
+    }
+
+    public Kitchen getKitchen(){
+        return kitchen;
     }
 
     public void addCustomer(String name, int phoneNumber){

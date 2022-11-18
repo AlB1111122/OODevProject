@@ -3,15 +3,23 @@ package com.example.oodevproj;
 import java.util.ArrayList;
 
 public class Order{
+    private int orderId;
     private String tableID;
     private Customer customer;
     private ArrayList<Dish> dishes = new ArrayList<Dish>();
     private boolean ready;
-    Order(String tableID, Customer customer, ArrayList<Dish> dishes){
+    public Order(String tableID, Customer customer){//public for testing reset later
         this.customer = customer;
         this.tableID = tableID;
-        this.dishes = dishes;
         ready = false;
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
+
+    public int getOrderId() {
+        return orderId;
     }
 
     public Customer getCustomer() {
@@ -28,16 +36,22 @@ public class Order{
 
     public void addDish(Dish dish){
         dishes.add(dish);
+        dish.setOrderId(orderId);
     }
     public ArrayList<Dish> getDishes() {
         return dishes;
     }
 
-    public void setReady() {
-        this.ready = true;
-    }
-
-    public boolean isReady(){
+    public boolean getReady() {
+        if (!ready) {
+            for (Dish d : dishes) {
+                if (!d.isReady()) {
+                    ready = false;
+                    break;
+                }
+                ready = true;
+            }
+        }
         return ready;
     }
 
@@ -47,6 +61,10 @@ public class Order{
         for(Dish d:dishes){
            dishStr.append(d.toString()).append("\n");
         }
-        return String.format("ORDER\nTable: %d\n",tableID,dishStr);
+        if(ready) {
+            return String.format("ORDER\nTable: %d\nReady", tableID, dishStr);
+        }else{
+            return String.format("ORDER\nTable: %d\nCooking", tableID, dishStr);
+        }
     }
 }
