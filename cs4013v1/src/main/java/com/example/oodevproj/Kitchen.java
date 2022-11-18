@@ -3,13 +3,13 @@ package com.example.oodevproj;
 import java.util.ArrayList;
 
 public class Kitchen {
-    private ArrayList<Dish> watingDish = new ArrayList<>();
+    private ArrayList<Dish> watingDishes = new ArrayList<>();
     private ArrayList<Dish> cookingDishes = new ArrayList<>();
     private ArrayList<Dish> readyDishes = new ArrayList<>();
     private ArrayList<Order> orders = new ArrayList<>();
     public void setCooking(int selection) throws RuntimeException{
-            cookingDishes.add(watingDish.get(selection - 1));
-            watingDish.remove(selection - 1);
+            cookingDishes.add(watingDishes.get(selection - 1));
+            watingDishes.remove(selection - 1);
     }
 
     public void setDishReady(int selection){
@@ -24,7 +24,7 @@ public class Kitchen {
     }
 
     public void addOrder(Order order){
-        watingDish.addAll(order.getDishes());
+        watingDishes.addAll(order.getDishes());
         orders.add(order);
     }
 
@@ -39,12 +39,12 @@ public class Kitchen {
     }
 
     public ArrayList<Dish> getWatingDish() {
-        return watingDish;
+        return watingDishes;
     }
 
     public ArrayList<String> getWatingDishString() {
         ArrayList<String> displayArr = new ArrayList<>();
-        for(Dish d:watingDish){
+        for(Dish d:watingDishes){
             displayArr.add(d.toKitchenString());
         }
         return displayArr;
@@ -60,7 +60,4 @@ public class Kitchen {
         return cookingDishes;
     }
 
-    public ArrayList<Dish> getReadyDishes() {
-        return readyDishes;
-    }
 }

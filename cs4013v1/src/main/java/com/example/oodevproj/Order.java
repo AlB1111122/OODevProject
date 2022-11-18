@@ -5,11 +5,10 @@ import java.util.ArrayList;
 public class Order{
     private int orderId;
     private int tableID;
-    private Customer customer;
     private ArrayList<Dish> dishes = new ArrayList<Dish>();
     private boolean ready;
-    Order(int tableID, Customer customer){//public for testing reset later
-        this.customer = customer;
+    Order(int orderId, int tableID){
+        this.orderId = orderId;
         this.tableID = tableID;
         ready = false;
     }
@@ -20,10 +19,6 @@ public class Order{
 
     public int getOrderId() {
         return orderId;
-    }
-
-    public Customer getCustomer() {
-        return customer;
     }
 
     public int getTableID() {
@@ -55,16 +50,19 @@ public class Order{
         return ready;
     }
 
+    public String toKitchenString() {
+        if(ready) {
+            return String.format("ORDER\nTable: %d\nReady", tableID);
+        }else{
+            return String.format("ORDER\nTable: %d\nCooking", tableID);
+        }
+    }
     @Override
-    public String toString() {
+    public String toString(){
         StringBuilder dishStr = new StringBuilder();
         for(Dish d:dishes){
-           dishStr.append(d.toString()).append("\n");
+            dishStr.append(d.toString()).append("\n");
         }
-        if(ready) {
-            return String.format("ORDER\nTable: %d\nReady", tableID, dishStr);
-        }else{
-            return String.format("ORDER\nTable: %d\nCooking", tableID, dishStr);
-        }
+        return String.format("ORDER\nTable: %d\n%s",tableID,dishStr);
     }
 }

@@ -11,6 +11,8 @@ public class Restaurant{
     private int restaurantID;
     private int capacity;
 
+    private int orders;
+
     private String location;
     private ArrayList<Table> tables = new ArrayList<Table>();
     private ArrayList<Employee> employees = new ArrayList<Employee>();
@@ -125,6 +127,13 @@ public class Restaurant{
             }
         }
         return false;
+    }
+
+    public void makeOrder(int tableId,ArrayList<Dish> dishes){//posibly change lateer
+        Order order = new Order(orders,tableId);
+        for(Dish d:dishes){
+            order.addDish(d);
+        }
     }
 }
 
