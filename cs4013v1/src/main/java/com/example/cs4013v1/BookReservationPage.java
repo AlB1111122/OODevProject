@@ -1,12 +1,14 @@
 package com.example.cs4013v1;
-import com.example.oodevproj.*;
 
+import com.example.oodevproj.Restaurant;
 import com.example.oodevproj.calender.ReservationDate;
 import com.example.oodevproj.calender.ReservationTime;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -16,9 +18,10 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class BookReservationPage extends Application {
-    Restaurant restaurant;
+    com.example.oodevproj.Restaurant restaurant;
     TextField numPeopleIn = new TextField();
     TextField dayIn = new TextField();
     TextField timeIn = new TextField();

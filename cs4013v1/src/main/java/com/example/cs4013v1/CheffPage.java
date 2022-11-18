@@ -21,7 +21,7 @@ public class CheffPage extends Application {
     @Override
     public void start(Stage stage) {
         stage.setTitle("Cheff page");
-        restaurant = new Restaurant(1);
+        restaurant = new Restaurant(1,"test");
         Dish d1 = new Dish(3);
         Customer c = new Customer("ban",78296653);
         Order o = new Order("2",c);

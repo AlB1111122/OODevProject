@@ -10,13 +10,20 @@ import java.util.ArrayList;
 public class Restaurant{
     private int restaurantID;
     private int capacity;
+
+    private String location;
     private ArrayList<Table> tables = new ArrayList<Table>();
     private ArrayList<Employee> employees = new ArrayList<Employee>();
     private ArrayList<Customer> customers = new ArrayList<Customer>();
     private ReservationCalendar cal;
     private Kitchen kitchen = new Kitchen();
-    public Restaurant(int restaurantID){
+    public Restaurant(int restaurantID, String location){
         this.restaurantID = restaurantID;
+        this.location = location;
+    }
+
+    public String getLocation() {
+        return location;
     }
 
     public int getRestaurantID() {
