@@ -19,28 +19,11 @@ public class TestUI extends Application {
         rL.addTable(6);
         rL.addTable(2);
 
-        CustomerUI ui = new CustomerUI();
-        ui.setYum(y);
+        CustomerUI ui = new CustomerUI(y);
         CustomerUI.main(args);
-    }
-
-    public static void test() throws IOException {
-        y.addResturaunt("Limerick");
-        Restaurant rL = y.getResturaunt("Limerick");
-        rL.addTable(3);
-        rL.addTable(2);
-
-        y.addResturaunt("Dublin");
-        Restaurant rD = y.getResturaunt("Dublin");
-        rL.addTable(6);
-        rL.addTable(2);
-        CustomerUI ui = new CustomerUI();
     }
 
     @Override
     public void start(Stage primaryStage) {
-        CustomerUI ui = new CustomerUI();
-        String[] s = new String[2];
-        CustomerUI.main(s);
     }
 }

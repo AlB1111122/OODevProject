@@ -135,16 +135,20 @@ public class Restaurant{
     }
 
     public void cancelReservation(int reservationId){
+        Reservation canceling = null;
         if(!getReservations().isEmpty()) {
             for (Reservation r : getReservations()) {
                 if (r.getReservationId() - reservationId == 0) {
-                    for(Table t: tables) {
-                        if(r.getTableNo() - t.getTableID() == 0){
-                            t.getCalender().cancel(r);
-                            return;
-                        }
-                    }
+                    canceling = r;
+                    break;
                 }
+            }
+        }
+        for(Table t: tables) {
+            assert canceling != null;
+            if(canceling.getTableNo() - t.getTableID() == 0){
+                t.getCalender().cancel(canceling);
+                return;
             }
         }
     }

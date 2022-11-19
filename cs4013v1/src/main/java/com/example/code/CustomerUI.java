@@ -39,7 +39,9 @@ public class CustomerUI extends Application{
     private ComboBox<String> location = new ComboBox<>();
     private ObservableList<String> resItems = FXCollections.observableArrayList();
 
-    private int[] resIds = new int[10];
+    CustomerUI(Yum yum){
+        this.yum = yum;
+    }
     @Override
     public void start(Stage stage){
 
@@ -180,9 +182,6 @@ public class CustomerUI extends Application{
     public static void main(String[] args) {
         launch();
     }
-    public void setYum(Yum yum){
-        this.yum = yum;
-    }
 
     public class findCancelConroller implements EventHandler<ActionEvent>{
         @Override
@@ -197,8 +196,6 @@ public class CustomerUI extends Application{
                 for(Reservation r: restaurant.getReservations()){
                     if(r.getCustomerId().equals(restaurant.getCustomerId(name,phoneNo))){
                         returningReservations.add(r.toCustomerString());
-                        resIds[i] = r.getReservationId();
-                        i++;
                     }
                 }
             }catch(IOException ex){
