@@ -116,8 +116,8 @@ public class Restaurant{
                 booking.addReservation(r);
                 reservations++;
                 return String.format("Sucsessfully reserved a table for %d at %s on %s!\n" +
-                        "You will shortly receive a text confirming your booking, and an hour before to remind you table%d"
-                        ,numPeople,time.toString(),date.toString(), booking.getTableID());
+                        "You will shortly receive a text confirming your booking, and an hour before to remind you"
+                        ,numPeople,time.toString(),date.toString());
             } catch (RuntimeException ex) {
                 return ex.getMessage();
             }
