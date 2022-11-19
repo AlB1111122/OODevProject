@@ -5,6 +5,7 @@ import com.example.code.calender.ReservationCalendar;
 import com.example.code.calender.ReservationDate;
 import com.example.code.calender.ReservationTime;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Restaurant{
@@ -73,6 +74,15 @@ public class Restaurant{
         return customers;
     }
 
+    public String getCustomerId(String name, int phoneNum)throws IOException{
+        for(Customer c:customers){
+            if(c.getName().equals(name) && c.getPhoneNumber() - phoneNum ==0){
+                return c.getID();
+            }
+        }
+        throw new IOException("Not an existing customer");
+    }
+
     public void addCustomer(Customer customer){
         customers.add(customer);
     }
@@ -115,7 +125,7 @@ public class Restaurant{
                 Reservation r = new Reservation(reservations,numPeople, date, time, booking.getTableID(), customerId);
                 booking.addReservation(r);
                 reservations++;
-                return String.format("Sucsessfully reserved a table for %d at %s on %s!\n" +
+                return String.format("Sucsessfully reserved a table for %d at %s on %s! " +
                         "You will shortly receive a text confirming your booking, and an hour before to remind you"
                         ,numPeople,time.toString(),date.toString());
             } catch (RuntimeException ex) {

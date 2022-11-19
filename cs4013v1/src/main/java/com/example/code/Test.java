@@ -1,21 +1,27 @@
 package com.example.code;
 
+import com.example.code.GUI.CustomerUI;
 import com.example.code.calender.ReservationDate;
 import com.example.code.calender.ReservationTime;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class Test {
-    static Restaurant r = new Restaurant(1,"lim");
+    Yum y = new Yum();
+    public  void test() throws IOException {
+        y.addResturaunt("Limerick");
+        Restaurant rL = y.getResturaunt("Limerick");
+        rL.addTable(3);
+        rL.addTable(2);
 
-    public  static void main(String[] args){
-        r.addTable(2);
-        r.addTable(2);
-        r.addTable(6);
-        ReservationDate d = new ReservationDate("12/11/2022");
-        ReservationTime t = new ReservationTime("11:30");
+        y.addResturaunt("Dublin");
+        Restaurant rD = y.getResturaunt("Dublin");
+        rL.addTable(6);
+        rL.addTable(2);
+    }
 
-        System.out.println(r.addReservation(2,d,t,345345345,"al"));
-        System.out.println(r.addReservation(2,d,t,345345345,"al"));
-        System.out.println(r.addReservation(2,d,t,345345345,"al"));
-        System.out.println(r.addReservation(5,d,t,345345345,"al"));
+    public Yum getY() {
+        return y;
     }
 }
