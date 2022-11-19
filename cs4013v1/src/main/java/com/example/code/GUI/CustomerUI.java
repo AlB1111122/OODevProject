@@ -113,7 +113,7 @@ public class CustomerUI extends Application{
                 phNo = getPhoneNo();
                 phoneNumerIn.setBackground(Background.fill(Color.WHITE));
                 dateTakenInfo.setTextFill(Color.BLACK);
-                dateTakenInfo.setText(restaurant.addReservations(noP,date,time,phNo,name));
+                dateTakenInfo.setText(restaurant.addReservation(noP,date,time,phNo,name));
             }catch(IOException ex){
                 dateTakenInfo.setText(ex.getMessage());
             }

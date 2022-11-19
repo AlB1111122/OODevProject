@@ -12,16 +12,24 @@ public class Restaurant{
     private int capacity;
 
     private int orders;
+    private int reservations;
 
     private String location;
     private ArrayList<Table> tables = new ArrayList<Table>();
     private ArrayList<Employee> employees = new ArrayList<Employee>();
     private ArrayList<Customer> customers = new ArrayList<Customer>();
-    private ReservationCalendar cal;
     private Kitchen kitchen = new Kitchen();
     public Restaurant(int restaurantID, String location){
         this.restaurantID = restaurantID;
         this.location = location;
+    }
+
+    public ArrayList<Reservation> getReservations(){
+        ArrayList<Reservation> reservations = new ArrayList<>();
+        for(Table t:tables){
+            reservations.addAll(getReservations());
+        }
+        return reservations;
     }
 
     public String getLocation() {
@@ -36,7 +44,7 @@ public class Restaurant{
         return tables;
     }
 
-    public void addTables(int seats){
+    public void addTable(int seats){
         Table newTable = new Table(seats, tables.size() + 1);
         tables.add(newTable);
     }
@@ -69,10 +77,6 @@ public class Restaurant{
         customers.add(customer);
     }
 
-    public ReservationCalendar getCalender(){
-        return cal;
-    }
-
     public Kitchen getKitchen(){
         return kitchen;
     }
@@ -82,7 +86,7 @@ public class Restaurant{
         customers.add(c);
     }
 
-    public String addReservations(int numPeople, ReservationDate date, ReservationTime time, int phoneNumber, String name){
+    public String addReservation(int numPeople, ReservationDate date, ReservationTime time, int phoneNumber, String name){
         String customerId = "";
         for(Person p:customers){
             if(p.getPhoneNumber() - phoneNumber == 0){
@@ -94,39 +98,31 @@ public class Restaurant{
             addCustomer(name,phoneNumber);
             customerId = customers.get(customers.size() - 1).getID();
         }
-        int temp = numPeople + 3;
         Table booking = null;
         for(Table t:tables){
-            if(t.getSeats() >= numPeople && temp < t.getSeats() && checkScheduleForConflict(time,date)){
-                temp = t.getSeats();
-                booking = t;
+            if(t.getSeats() >= numPeople && t.getSeats() < numPeople + 3){
+                if(!t.checkScheduleForConflict(time,date)) {
+                    booking = t;
+                    break;
+                }
             }
         }
-        if(checkScheduleForConflict(time,date)){
-            return "No tables are avalible for a group of that size at that time";
-        }
         if(booking != null) {
+            if(booking.checkScheduleForConflict(time,date)){
+                return "No tables are avalible for a group of that size at that time";
+            }
             try {
-                Reservation r = new Reservation(cal.getReservations().size() + 1, numPeople, date, time, booking.getTableID(), customerId);
-                cal.add(r);
+                Reservation r = new Reservation(reservations,numPeople, date, time, booking.getTableID(), customerId);
+                booking.addReservation(r);
+                reservations++;
                 return String.format("Sucsessfully reserved a table for %d at %s on %s!\n" +
-                        "You will shortly receive a text confirming your booking, and an hour before to remind you"
-                        ,numPeople,time.toString(),date.toString());
+                        "You will shortly receive a text confirming your booking, and an hour before to remind you table%d"
+                        ,numPeople,time.toString(),date.toString(), booking.getTableID());
             } catch (RuntimeException ex) {
                 return ex.getMessage();
             }
         }
         return "There are no tables available for a group of that size at this resturaunt";
-    }
-
-    private boolean checkScheduleForConflict(ReservationTime time, ReservationDate date){
-        for(Reservation res:cal.getReservationsForDay(date)){
-            if (time.getTimeMin() > res.getFromMin() && time.getTimeMin() < res.getToMin() ||
-                    (time.getTimeMin() + 120) > res.getFromMin() && (time.getTimeMin() + 120) < res.getToMin() ) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public void makeOrder(int tableId,ArrayList<Dish> dishes){//posibly change lateer
