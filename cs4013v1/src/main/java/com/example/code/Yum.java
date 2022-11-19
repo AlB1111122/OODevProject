@@ -7,7 +7,7 @@ public class Yum{
     private static int numberOfRestaurants;
     private static ArrayList<Restaurant> restaurants = new ArrayList<>();
 
-    Yum(){
+    public Yum(){
 
     }
     public void addResturaunt(String location){
@@ -20,12 +20,20 @@ public class Yum{
         return restaurants;
     }
 
+    public ArrayList<String> getRestrauntLocations(){
+        ArrayList<String> locs= new ArrayList<>();
+        for(Restaurant r:restaurants){
+            locs.add(r.getLocation());
+        }
+        return locs;
+    }
+
     public static int getNumberOfRestaurants() {
         return numberOfRestaurants;
     }
     public Restaurant getResturaunt(String location)throws IOException{
         for(Restaurant r:restaurants){
-            if(r.getLocation().matches(location)){
+            if(r.getLocation().compareTo(location) == 0){
                 return r;
             }
         }

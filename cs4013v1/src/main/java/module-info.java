@@ -8,6 +8,4 @@ module com.example.code {
     opens com.example.code to javafx.fxml;
     exports com.example.code.calender;
     exports com.example.code;
-    exports com.example.code.GUI;
-    opens com.example.code.GUI to javafx.fxml;
-}//Class 'Restaurant' is not exported from module 'com.example.oodevproj'
+}

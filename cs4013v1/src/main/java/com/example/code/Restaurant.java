@@ -28,7 +28,7 @@ public class Restaurant{
     public ArrayList<Reservation> getReservations(){
         ArrayList<Reservation> reservations = new ArrayList<>();
         for(Table t:tables){
-            reservations.addAll(getReservations());
+            reservations.addAll(t.getCalender().getReservations());
         }
         return reservations;
     }
@@ -125,14 +125,28 @@ public class Restaurant{
                 Reservation r = new Reservation(reservations,numPeople, date, time, booking.getTableID(), customerId);
                 booking.addReservation(r);
                 reservations++;
-                return String.format("Sucsessfully reserved a table for %d at %s on %s! " +
-                        "You will shortly receive a text confirming your booking, and an hour before to remind you"
+                return String.format("Reservation for %d at %s on %s! You will receive a text an hour before to remind you"
                         ,numPeople,time.toString(),date.toString());
             } catch (RuntimeException ex) {
                 return ex.getMessage();
             }
         }
         return "There are no tables available for a group of that size at this resturaunt";
+    }
+
+    public void cancelReservation(int reservationId){
+        if(!getReservations().isEmpty()) {
+            for (Reservation r : getReservations()) {
+                if (r.getReservationId() - reservationId == 0) {
+                    for(Table t: tables) {
+                        if(r.getTableNo() - t.getTableID() == 0){
+                            t.getCalender().cancel(r);
+                            return;
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public void makeOrder(int tableId,ArrayList<Dish> dishes){//posibly change lateer

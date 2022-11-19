@@ -1,4 +1,4 @@
-package com.example.code.GUI;
+package com.example.code;
 
 import com.example.code.*;
 import javafx.application.Application;

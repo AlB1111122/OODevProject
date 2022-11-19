@@ -1,5 +1,4 @@
-package com.example.code.GUI;
-import com.example.code.Customer;
+package com.example.code;
 import com.example.code.Restaurant;
 import com.example.code.Test;
 import com.example.code.Yum;
@@ -12,10 +11,11 @@ import javafx.collections.ObservableList;
 import javafx.collections.ObservableListBase;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -24,7 +24,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class CustomerUI extends Application{
-    private Yum yum;
+    private Yum yum = new Yum();
     private com.example.code.Restaurant restaurant;//reset later
     private TextField numPeopleIn = new TextField();
     private TextField dayIn = new TextField();
@@ -35,8 +35,11 @@ public class CustomerUI extends Application{
 
     private TextField cancellingNameIn = new TextField();
     private TextField cancellingPhoneNumberIn = new TextField();
-    private TextField cancellingMessage = new TextField();
+    private Label cancellingMessage = new Label("");
+    private ComboBox<String> location = new ComboBox<>();
     private ObservableList<String> resItems = FXCollections.observableArrayList();
+
+    private int[] resIds = new int[10];
     @Override
     public void start(Stage stage){
 
@@ -47,7 +50,7 @@ public class CustomerUI extends Application{
         FlowPane base = new FlowPane(grid,dateTakenInfo);
         base.setAlignment(Pos.TOP_CENTER);
 
-        Scene bookPage = new Scene(base);
+        Scene bookPage = new Scene(base,660,210);
 
         Label numPeople = new Label("Enter the number of people you are booking for: ");
         numPeople.setPrefSize(300,20);
@@ -84,15 +87,24 @@ public class CustomerUI extends Application{
         phoneNumerIn.setPrefSize(300,20);
         grid.add(phoneNumerIn,1,4);
 
+        Label locationLabel = new Label("Select the location:");
+        grid.add(locationLabel,0,5);
+
+
+        location.getItems().addAll(yum.getRestrauntLocations());
+        location.setVisibleRowCount(5);
+        location.setVisible(true);
+        location.setPrefSize(300,20);
+        grid.add(location,1,5);
+
         Button bookBut = new Button("Book now!");
         bookBut.setPrefSize(300,20);
-        grid.add(bookBut,0,5);
+        grid.add(bookBut,0,6);
 
         Button cancelBut = new Button("Cancel reservation");
         cancelBut.setPrefSize(300,20);
-        grid.add(cancelBut,1,5);
+        grid.add(cancelBut,1,6);
 
-        dateTakenInfo.setTextFill(Color.color(1, 0, 0));
         dateTakenInfo.setAlignment(Pos.BOTTOM_CENTER);
 
         //CancelPage
@@ -101,41 +113,65 @@ public class CustomerUI extends Application{
         cancelGrid.setAlignment(Pos.TOP_CENTER);
 
         Label cancelName = new Label("Enter your name:");
-        cancelName.setPrefSize(300,20);
+        cancelName.setPrefSize(200,20);
+        cancelName.setAlignment(Pos.BASELINE_LEFT);
         cancelGrid.add(cancelName,0,0);
 
-        cancellingNameIn.setPrefSize(300,20);
+        cancellingNameIn.setPrefSize(200,20);
+        cancellingNameIn.setAlignment(Pos.BASELINE_LEFT);
         cancelGrid.add(cancellingNameIn,1,0);
 
         Label cancellingPhoneNumber = new Label("Enter your phone number:");
-        cancellingPhoneNumber.setPrefSize(300,20);
+        cancellingPhoneNumber.setAlignment(Pos.BASELINE_RIGHT);
+        cancellingPhoneNumber.setPrefSize(200,20);
         cancelGrid.add(cancellingPhoneNumber,0,1);
 
-        cancellingPhoneNumberIn.setPrefSize(300,20);
+        cancellingPhoneNumberIn.setPrefSize(200,20);
+        cancellingPhoneNumber.setAlignment(Pos.BASELINE_LEFT);
         cancelGrid.add(cancellingPhoneNumberIn,1,1);
 
         Button backToBookPage = new Button("Return to booking page");
+        backToBookPage.setPrefSize(200,20);
         cancelGrid.add(backToBookPage,0,2);
 
         Button findReservations = new Button("Find my reservation(s)");
+        findReservations.setPrefSize(200,20);
         findReservations.setAlignment(Pos.BASELINE_RIGHT);
         cancelGrid.add(findReservations,1,2);
 
         ListView<String> reservations = new ListView<>();
         reservations.setItems(resItems);
+        reservations.setPrefHeight(40);
+        cancelGrid.add(reservations,0,3);
 
-        cancellingMessage.setPrefSize(300,20);
+        cancellingMessage.setPrefSize(200,20);
+        cancellingMessage.setAlignment(Pos.BASELINE_CENTER);
 
-        FlowPane cancelBox = new FlowPane(cancelGrid,reservations,cancellingMessage);
+        Button cancelResButton = new Button("Cancel");
+        cancelResButton.setPrefSize(200,20);
+
+        FlowPane buttonMessageBox = new FlowPane(cancellingMessage,cancelResButton);
+        buttonMessageBox.setVgap(3);
+        cancelGrid.add(buttonMessageBox,1,3);
+        buttonMessageBox.setAlignment(Pos.CENTER_RIGHT);
+        buttonMessageBox.setOrientation(Orientation.VERTICAL);
+
         reservations.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
-        Scene cancelPage = new Scene(cancelBox,620,183);
+        Scene cancelPage = new Scene(cancelGrid,610,200);
 
-        //buttons
+        //events
         bookBut.setOnAction(new ReservationController());
         cancelBut.setOnAction(e -> stage.setScene(cancelPage));
         findReservations.setOnAction(new findCancelConroller());
         backToBookPage.setOnAction(e -> stage.setScene(bookPage));
+        cancelResButton.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent actionEvent){
+                restaurant.cancelReservation(reservations.getFocusModel().getFocusedIndex());
+                cancellingMessage.setText("Appointment canceled");
+            }
+        });
 
         stage.setScene(bookPage);
         stage.show();
@@ -144,14 +180,8 @@ public class CustomerUI extends Application{
     public static void main(String[] args) {
         launch();
     }
-
     public void setYum(Yum yum){
-        //for testing
-        Test t = new Test();
-        this.yum = t.getY();
-    }
-    public void setResturaunt(Restaurant restaurant){
-        this.restaurant = restaurant;
+        this.yum = yum;
     }
 
     public class findCancelConroller implements EventHandler<ActionEvent>{
@@ -163,9 +193,12 @@ public class CustomerUI extends Application{
             try{
                 name = getName();
                 phoneNo = getPhoneNo();
+                int i = 0;
                 for(Reservation r: restaurant.getReservations()){
                     if(r.getCustomerId().equals(restaurant.getCustomerId(name,phoneNo))){
-                        returningReservations.add(r.toString());
+                        returningReservations.add(r.toCustomerString());
+                        resIds[i] = r.getReservationId();
+                        i++;
                     }
                 }
             }catch(IOException ex){
@@ -209,6 +242,7 @@ public class CustomerUI extends Application{
             String name = null;
             int phNo = 0;
             try {
+                restaurant = yum.getResturaunt(location.getValue());
                 noP = numPeople();
                 numPeopleIn.setBackground(Background.fill(Color.WHITE));
                 date = getDate();
@@ -219,7 +253,6 @@ public class CustomerUI extends Application{
                 nameIn.setBackground(Background.fill(Color.WHITE));
                 phNo = getPhoneNo();
                 phoneNumerIn.setBackground(Background.fill(Color.WHITE));
-                dateTakenInfo.setTextFill(Color.BLACK);
                 dateTakenInfo.setText(restaurant.addReservation(noP,date,time,phNo,name));
             }catch(IOException ex){
                 dateTakenInfo.setText(ex.getMessage());
