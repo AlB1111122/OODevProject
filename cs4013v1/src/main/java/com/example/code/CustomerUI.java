@@ -169,8 +169,12 @@ public class CustomerUI extends Application{
         findReservations.setOnAction(new findCancelConroller());
         backToBookPage.setOnAction(e -> stage.setScene(bookPage));
         cancelResButton.setOnAction(actionEvent -> {
-            restaurant.cancelReservation(resIds[reservations.getFocusModel().getFocusedIndex()]);
-            cancellingMessage.setText("Appointment canceled");
+            if(!(reservations.getFocusModel().getFocusedIndex() < 0)) {
+                restaurant.cancelReservation(resIds[reservations.getFocusModel().getFocusedIndex()]);
+                cancellingMessage.setText("Appointment canceled");
+            }else{
+                cancellingMessage.setText("No appointment selected");
+            }
         });
 
         stage.setScene(bookPage);

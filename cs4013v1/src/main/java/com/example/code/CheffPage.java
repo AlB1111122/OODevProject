@@ -4,14 +4,14 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.geometry.HorizontalDirection;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -28,9 +28,11 @@ public class CheffPage extends Application {
         this.kitchen = restaurant.getKitchen();
     }
 
+    Label waitLMessage = new Label("gffdfagf");
+
     @Override
     public void start(Stage stage) {
-
+        stage.setTitle("Cheff screen");
         //waitng list pane
         //waitng list: make waiting list label
         Label waitingLabel = new Label("Waiting Orders");
@@ -56,24 +58,75 @@ public class CheffPage extends Application {
         setWaitngtoCooking.setAlignment(Pos.CENTER);
         setWaitngtoCooking.setPrefSize(150,25);
 
+        //make button bar
         GridPane waitLButonBar = new GridPane();
         waitLButonBar.setPrefSize(300,25);
         waitLButonBar.add(refreshWL,0,0);
         waitLButonBar.add(setWaitngtoCooking,1,0);
-        //make button bar
 
         //waiting list: make pane
-        FlowPane waitingListPane = new FlowPane(waitingLabel,waitingList,waitLButonBar);
-        waitingListPane.setOrientation(Orientation.VERTICAL);
-        waitingListPane.setPrefSize(280,700);
+        GridPane waitingListPane = new GridPane();
+        waitingListPane.add(waitingLabel,0,0);
+        waitingListPane.add(waitingList,0,1);
+        waitingListPane.add(waitLButonBar,0,3);
+        waitingListPane.setAlignment(Pos.TOP_LEFT);
+
+        //cooking list
+        //cooking list: make list label
+        Label cookingLabel = new Label("Waiting Orders");
+        cookingLabel.setAlignment(Pos.CENTER);
+        cookingLabel.setPrefSize(300,25);
+        cookingLabel.setBackground(Background.fill(Color.BLACK));
+        cookingLabel.setTextFill(Color.WHITE);
+
+        //cooking list:make list
+        ListView<String> cookingList = new ListView<>();
+        cookingList.setPrefSize(300,648.5);
+        cookingList.setStyle("-fx-border-color: black; -fx-border-width: 2");
+        cookingList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        ObservableList<String> cookingDish = FXCollections.observableArrayList (kitchen.getCookingDishString());
+        cookingList.setItems(cookingDish);
+
+        //cooking list: set button
+        Button setDishReadyButton = new Button("Set selected ready");
+        setDishReadyButton.setAlignment(Pos.CENTER);
+        setDishReadyButton.setPrefSize(300,25);
+
+        //cooking list: make listPane
+        FlowPane cookingPane = new FlowPane(cookingLabel,cookingList,setDishReadyButton);
+        cookingPane.setAlignment(Pos.TOP_RIGHT);
+        cookingPane.setPrefSize(300,700);
+
+        //center pane
+        //center pane: make pane
+        Pane centrePane = new Pane();
 
         //Event controll
-        //waitlist buttons
         refreshWL.setOnAction(actionEvent -> {
             waitingList.setItems(FXCollections.observableArrayList (kitchen.getWatingDishString()));
         });
+        setWaitngtoCooking.setOnAction(actionEvent -> {
+            try {
+                kitchen.setCooking(waitingList.getFocusModel().getFocusedIndex());
+                waitingList.setItems(FXCollections.observableArrayList (kitchen.getWatingDishString()));
+                cookingList.setItems(FXCollections.observableArrayList (kitchen.getCookingDishString()));
+                waitLMessage.setText("Moved");
+            }catch(RuntimeException ex){
+                waitLMessage.setText(ex.getMessage());
+            }
+        });
+        setDishReadyButton.setOnAction(actionEvent -> {
+            kitchen.setDishReady(cookingList.getFocusModel().getFocusedIndex());
+            cookingList.setItems(FXCollections.observableArrayList (kitchen.getCookingDishString()));
+        });
 
-        Scene pageBase = new Scene(waitingListPane,1500,700);
+        GridPane panes = new GridPane();
+        panes.setGridLinesVisible(true);
+        panes.add(waitingListPane,0,0);
+        panes.add(centrePane,1,0);
+        panes.add(cookingPane,2,0);
+
+        Scene pageBase = new Scene(panes,1500,700);
         stage.setScene(pageBase);
         stage.show();
     }

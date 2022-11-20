@@ -20,21 +20,21 @@ public class TestUI extends Application {
         rL.addTable(4);
         rL.addTable(4);
         ArrayList<Dish> orderDishes = new ArrayList<>();
-        Dish d1 = new Dish(1,"no sauce");
+        Dish d1 = new Dish(1,"1");
         orderDishes.add(d1);
-        Dish d2 = new Dish(3);
+        Dish d2 = new Dish(3,"2");
         orderDishes.add(d2);
 
         ArrayList<Dish> orderDishes2 = new ArrayList<>();
-        Dish d3 = new Dish(6,"no sauce");
+        Dish d3 = new Dish(6,"3");
         orderDishes2.add(d3);
-        Dish d4 = new Dish(9);
+        Dish d4 = new Dish(9,"4");
         orderDishes2.add(d4);
 
         ArrayList<Dish> orderDishes3 = new ArrayList<>();
-        Dish d5 = new Dish(15,"note");
+        Dish d5 = new Dish(15,"5");
         orderDishes3.add(d5);
-        Dish d6 = new Dish(11,"note");
+        Dish d6 = new Dish(11,"6");
         orderDishes3.add(d6);
 
 
@@ -44,8 +44,6 @@ public class TestUI extends Application {
         rL.getKitchen().addOrder(rL.makeOrder(2,orderDishes2));
         cheff.start(primaryStage);
         rL.getKitchen().addOrder(rL.makeOrder(2,orderDishes3));
-
-
     }
 
 

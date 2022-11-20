@@ -8,14 +8,14 @@ public class Kitchen {
     private ArrayList<Dish> readyDishes = new ArrayList<>();
     private ArrayList<Order> orders = new ArrayList<>();
     public void setCooking(int selection) throws RuntimeException{
-            cookingDishes.add(watingDishes.get(selection - 1));
-            watingDishes.remove(selection - 1);
+        cookingDishes.add(watingDishes.get(selection));
+        watingDishes.remove(selection);
     }
 
     public void setDishReady(int selection){
-        Dish d = cookingDishes.get(selection - 1);
+        Dish d = cookingDishes.get(selection);
         readyDishes.add(d);
-        cookingDishes.remove(selection - 1);
+        cookingDishes.remove(selection);
         d.setReady();
     }
 
@@ -58,6 +58,14 @@ public class Kitchen {
 
     public ArrayList<Dish> getCookingDishes() {
         return cookingDishes;
+    }
+
+    public ArrayList<String> getCookingDishString() {
+        ArrayList<String> displayArr = new ArrayList<>();
+        for(Dish d:cookingDishes){
+            displayArr.add(d.toKitchenString());
+        }
+        return displayArr;
     }
 
 }
