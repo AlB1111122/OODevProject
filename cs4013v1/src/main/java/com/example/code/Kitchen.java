@@ -38,7 +38,7 @@ public class Kitchen {
         return temp;
     }
 
-    public ArrayList<Dish> getWatingDish() {
+    public ArrayList<Dish> getWatingDishes() {
         return watingDishes;
     }
 

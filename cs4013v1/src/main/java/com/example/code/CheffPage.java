@@ -12,15 +12,16 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class CheffPage extends Application {
-    Restaurant restaurant;
-    Kitchen kitchen;
-    CheffPage(Restaurant restaurant){
-        this.restaurant = restaurant;
-        this.kitchen = restaurant.getKitchen();
-    }
+    Restaurant restaurant = new Restaurant(0,"test");
+    Kitchen kitchen = new Kitchen();
 
     public static void main(String[] args) {
         launch();
+    }
+
+    public void setRestaurant(Restaurant restaurant){
+        this.restaurant = restaurant;
+        this.kitchen = restaurant.getKitchen();
     }
 
     @Override

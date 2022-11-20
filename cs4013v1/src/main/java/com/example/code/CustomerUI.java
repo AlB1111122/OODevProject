@@ -24,7 +24,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class CustomerUI extends Application{
-    private Yum yum = new Yum();
+    private Yum yum =new Yum();
     private com.example.code.Restaurant restaurant;//reset later
     private TextField numPeopleIn = new TextField();
     private TextField dayIn = new TextField();
@@ -40,7 +40,7 @@ public class CustomerUI extends Application{
     private ObservableList<String> resItems = FXCollections.observableArrayList();
     private  int[] resIds = new int[10];
 
-    CustomerUI(Yum yum){
+    public void setRestaurant(Yum yum){
         this.yum = yum;
     }
     @Override
@@ -161,7 +161,7 @@ public class CustomerUI extends Application{
 
         reservations.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
-        Scene cancelPage = new Scene(cancelGrid,610,200);
+        Scene cancelPage = new Scene(cancelGrid,490,200);
 
         //events
         bookBut.setOnAction(new ReservationController());

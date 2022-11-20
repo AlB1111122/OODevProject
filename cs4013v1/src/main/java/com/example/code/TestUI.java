@@ -19,8 +19,6 @@ public class TestUI extends Application {
         rL.addTable(6);
         rL.addTable(2);
 
-        CustomerUI ui = new CustomerUI(y);
-        CustomerUI.main(args);
     }
 
     @Override
