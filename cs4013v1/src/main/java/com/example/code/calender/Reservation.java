@@ -61,12 +61,12 @@ public class Reservation{
       return new ReservationTime(str);
    }
 
-   public String toString(){
+   public String toInternalString(){
       return String.format("%d,%d,%d/%d/%d,%d:%d,%d,%s"
               ,reservationId,numPeople,day.getDay(),day.getMonth(),day.getYear(),from.getHours(),from.getMinutes(),tableNo,customerId);
    }
 
-   public String toCustomerString(){
+   public String toString(){
       return String.format("People: %d, Date: %d/%d/%d,Time: %d:%d"
               ,numPeople,day.getDay(),day.getMonth(),day.getYear(),from.getHours(),from.getMinutes());
    }

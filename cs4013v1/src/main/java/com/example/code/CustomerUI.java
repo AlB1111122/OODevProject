@@ -38,6 +38,7 @@ public class CustomerUI extends Application{
     private Label cancellingMessage = new Label("");
     private ComboBox<String> location = new ComboBox<>();
     private ObservableList<String> resItems = FXCollections.observableArrayList();
+    private  int[] resIds = new int[10];
 
     CustomerUI(Yum yum){
         this.yum = yum;
@@ -170,7 +171,7 @@ public class CustomerUI extends Application{
         cancelResButton.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent actionEvent){
-                restaurant.cancelReservation(reservations.getFocusModel().getFocusedIndex());
+                restaurant.cancelReservation(resIds[reservations.getFocusModel().getFocusedIndex()]);
                 cancellingMessage.setText("Appointment canceled");
             }
         });
@@ -195,7 +196,9 @@ public class CustomerUI extends Application{
                 int i = 0;
                 for(Reservation r: restaurant.getReservations()){
                     if(r.getCustomerId().equals(restaurant.getCustomerId(name,phoneNo))){
-                        returningReservations.add(r.toCustomerString());
+                        returningReservations.add(r.toString());
+                        resIds[i] = r.getReservationId();
+                        i++;
                     }
                 }
             }catch(IOException ex){
