@@ -12,7 +12,7 @@ public class Restaurant{
     private int restaurantID;
     private int capacity;
 
-    private int orders;
+    private static int orders;
     private int reservations;
 
     private String location;
@@ -153,11 +153,12 @@ public class Restaurant{
         }
     }
 
-    public void makeOrder(int tableId,ArrayList<Dish> dishes){//posibly change lateer
-        Order order = new Order(orders,tableId);
+    public Order makeOrder(int tableId,ArrayList<Dish> dishes){//posibly change lateer
+        orders++;
         for(Dish d:dishes){
-            order.addDish(d);
+            d.setOrderId(orders);
         }
+        return new Order(orders,tableId,dishes);
     }
 }
 

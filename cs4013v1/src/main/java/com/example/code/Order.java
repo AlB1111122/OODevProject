@@ -3,18 +3,15 @@ package com.example.code;
 import java.util.ArrayList;
 
 public class Order{
-    private int orderId;
+    private final int orderId;
     private int tableID;
     private ArrayList<Dish> dishes = new ArrayList<Dish>();
     private boolean ready;
-    Order(int orderId, int tableID){
+    Order(int orderId, int tableID,ArrayList<Dish> dishes){
         this.orderId = orderId;
         this.tableID = tableID;
+        this.dishes = dishes;
         ready = false;
-    }
-
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
     }
 
     public int getOrderId() {
@@ -52,7 +49,7 @@ public class Order{
 
     public String toKitchenString() {
         if(ready) {
-            return String.format("ORDER\nTable: %d\nReady", tableID);
+            return String.format("ORDER%d\nTable: %d\nReady",orderId,tableID);
         }else{
             return String.format("ORDER\nTable: %d\nCooking", tableID);
         }

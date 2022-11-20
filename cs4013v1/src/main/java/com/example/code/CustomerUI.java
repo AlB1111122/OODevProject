@@ -168,12 +168,9 @@ public class CustomerUI extends Application{
         cancelBut.setOnAction(e -> stage.setScene(cancelPage));
         findReservations.setOnAction(new findCancelConroller());
         backToBookPage.setOnAction(e -> stage.setScene(bookPage));
-        cancelResButton.setOnAction(new EventHandler<ActionEvent>(){
-            @Override
-            public void handle(ActionEvent actionEvent){
-                restaurant.cancelReservation(resIds[reservations.getFocusModel().getFocusedIndex()]);
-                cancellingMessage.setText("Appointment canceled");
-            }
+        cancelResButton.setOnAction(actionEvent -> {
+            restaurant.cancelReservation(resIds[reservations.getFocusModel().getFocusedIndex()]);
+            cancellingMessage.setText("Appointment canceled");
         });
 
         stage.setScene(bookPage);
