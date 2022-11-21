@@ -5,12 +5,22 @@ import com.example.code.calender.ReservationTime;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class Test {
     static Yum y = new Yum();
     public static void main(String[] args) throws IOException {
-        y.addResturaunt("Limerick");
+        String s = "Reservation for table %d at %s on %s! You will receive a text an hour before to remind you";
+        System.out.println(s.substring(22,24));
+    }
+
+    public static void test() throws IOException {
+    }
+
+            /*
+                    y.addResturaunt("Limerick");
         Restaurant rL = y.getResturaunt("Limerick");
         rL.addTable(4);
         rL.addTable(4);
@@ -34,14 +44,11 @@ public class Test {
             System.out.println(d.toKitchenString());
         }
         System.out.println(rL.getKitchen().getWatingDishString());
-    }
-
-    public static void test() throws IOException {
 
 
-    }
 
-            /*
+
+
         y.addResturaunt("Limerick");
         rL.addTable(3);
         rL.addTable(2);

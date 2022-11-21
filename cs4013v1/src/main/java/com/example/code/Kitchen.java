@@ -50,10 +50,9 @@ public class Kitchen {
         return displayArr;
     }
 
-    public Order takeReadyOrder(int selection){
-        Order order = orders.get(selection - 1);
+    public void takeReadyOrder(int selection){
+        Order order = getReadyOrders().get(selection);
         orders.remove(order);
-        return order;
     }
 
     public ArrayList<Dish> getCookingDishes() {

@@ -8,7 +8,15 @@ public class ReservationDate implements Comparable{
    private int day;
 
    public ReservationDate(String input){
-      StringTokenizer in = new StringTokenizer(input, "/");
+      StringTokenizer in = null;
+      if(input.contains("/")){
+         in = new StringTokenizer(input, "/");
+      }else if(input.contains("-")){
+         in = new StringTokenizer(input, "-");
+      }else{
+         return;
+      }
+      //StringTokenizer in = new StringTokenizer(input, "/");
       if(in.countTokens() < 3 || in.countTokens() > 3){
          throw new RuntimeException("not a valid date");
       }

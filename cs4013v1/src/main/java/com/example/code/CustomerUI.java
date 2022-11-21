@@ -45,7 +45,6 @@ public class CustomerUI extends Application{
     }
     @Override
     public void start(Stage stage){
-
         GridPane grid = new GridPane();
         grid.setVgap(1.5);
         grid.setAlignment(Pos.TOP_CENTER);

@@ -40,13 +40,28 @@ public class TestUI extends Application {
         Dish d6 = new Dish(11,"6");
         orderDishes3.add(d6);
 
+        Kitchen k = rL.getKitchen();
 
-        CheffPage cheff = new CheffPage();
-        cheff.setRestaurant(rL);
+        //CheffPage cheff = new CheffPage();
+        //cheff.setRestaurant(rL);
+        WaiterUI waiter = new WaiterUI();
+        waiter.setRestaurant(rL);
         rL.getKitchen().addOrder(rL.makeOrder(1,orderDishes));
         rL.getKitchen().addOrder(rL.makeOrder(2,orderDishes2));
-        cheff.start(primaryStage);
         rL.getKitchen().addOrder(rL.makeOrder(2,orderDishes3));
+        k.setCooking(0);
+        k.setCooking(0);
+        k.setCooking(0);
+        k.setCooking(0);
+        k.setCooking(0);
+        k.setCooking(0);
+        k.setDishReady(0);
+        k.setDishReady(0);
+        k.setDishReady(0);
+        waiter.start(primaryStage);
+        k.setDishReady(0);
+        k.setDishReady(0);
+        k.setDishReady(0);
     }
 
 
