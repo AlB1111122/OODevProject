@@ -1,6 +1,8 @@
 package com.example.code;
 
 import javafx.application.Application;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -73,7 +75,7 @@ public class CheffPage extends Application {
 
         //cooking list
         //cooking list: make list label
-        Label cookingLabel = new Label("Waiting Orders");
+        Label cookingLabel = new Label("Cooking Orders");
         cookingLabel.setAlignment(Pos.CENTER);
         cookingLabel.setPrefSize(300,25);
         cookingLabel.setBackground(Background.fill(Color.BLACK));
@@ -99,7 +101,9 @@ public class CheffPage extends Application {
 
         //center pane
         //center pane: make pane
-        Pane centrePane = new Pane();
+        Pane p = new Pane(waitLMessage);
+        Pane centrePane = new Pane(p);
+        centrePane.setPrefSize(900,700);
 
         //Event controll
         refreshWL.setOnAction(actionEvent -> {

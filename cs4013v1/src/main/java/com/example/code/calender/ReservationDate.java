@@ -2,7 +2,7 @@ package com.example.code.calender;
 
 import java.util.StringTokenizer;
 
-public class ReservationDate{
+public class ReservationDate implements Comparable{
    private int year;
    private int month;
    private int day;
@@ -39,7 +39,7 @@ public class ReservationDate{
    public int getYear() {
       return year;
    }
-
+@Override
    public String toString(){
       String dayS = "" + day;
       if(day < 10){
@@ -56,4 +56,12 @@ public class ReservationDate{
       return String.format("%s/%s/%s",dayS,monthS,yearS);
    }
 
+   @Override
+   public int compareTo(Object o) {
+      if(this.toString().compareTo(o.toString()) == 0){
+         return 0;
+      }else{
+         return - 1;
+      }
+   }
 }

@@ -65,7 +65,7 @@ public class Reservation{
       return String.format("%d,%d,%d/%d/%d,%d:%d,%d,%s"
               ,reservationId,numPeople,day.getDay(),day.getMonth(),day.getYear(),from.getHours(),from.getMinutes(),tableNo,customerId);
    }
-
+@Override
    public String toString(){
       return String.format("People: %d, Date: %d/%d/%d,Time: %d:%d"
               ,numPeople,day.getDay(),day.getMonth(),day.getYear(),from.getHours(),from.getMinutes());

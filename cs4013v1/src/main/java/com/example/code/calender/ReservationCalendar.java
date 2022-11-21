@@ -11,9 +11,9 @@ public class ReservationCalendar{
 
    public ArrayList<Reservation> getReservationsForDay(ReservationDate day){
       ArrayList<Reservation> temp = new ArrayList<>();
-      for(Reservation a:Reservations){
-         if(a.getDay().toString().matches(day.toString())){
-            temp.add(a);
+      for(Reservation r:Reservations){
+         if(r.getDay().compareTo(day.getDay()) > -1){
+            temp.add(r);
          }
       }
       return temp;

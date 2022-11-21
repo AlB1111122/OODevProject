@@ -37,7 +37,7 @@ public class ReservationTime{
    public int getMinutes(){
       return minutes;
    }
-
+@Override
    public String toString(){
       String h = "" + hours;
       String m = "" + minutes;
@@ -49,4 +49,5 @@ public class ReservationTime{
       }
       return String.format("%s:%s",h,m);
    }
+
 }

@@ -51,7 +51,7 @@ public class Dish{
     public void setReady(){
         ready = true;
     }
-
+    @Override
     public String toString(){
         return String.format("Dish: %s, Price: %.2f",dishName,price);
     }
