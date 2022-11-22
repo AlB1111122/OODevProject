@@ -1,14 +1,23 @@
 package com.example.code.calender;
 
 import java.util.*;
-//reservation package is repuposed code from lab 7
+//reservation package is repurposed code from lab 7
 public class ReservationCalendar{
    private ArrayList<Reservation> Reservations = new ArrayList<>();
 
-   public void add(Reservation app){
-      Reservations.add(app);
+   /**
+    * ads a new reservation to the calender
+    * @param res the reservation to be added to the calendar
+    */
+   public void add(Reservation res){
+      Reservations.add(res);
    }
 
+   /**
+    * returns all the reservations booked for the given day
+    * @param day the day being searched for reservations for
+    * @return arrayList of reservations on the date inserted
+    */
    public ArrayList<Reservation> getReservationsForDay(ReservationDate day){
       ArrayList<Reservation> temp = new ArrayList<>();
       for(Reservation r:Reservations){
@@ -19,10 +28,18 @@ public class ReservationCalendar{
       return temp;
    }
 
+   /**
+    * removes the given reservation from the calender
+    * @param Reservation reservation to be removed from the calender
+    */
    public void cancel(Reservation Reservation){
       Reservations.remove(Reservation);
    }
 
+   /**
+    * returns a list of all the reservations in this calender
+    * @return ArrayList of reservations
+    */
    public ArrayList<Reservation> getReservations(){
       return Reservations;
    }

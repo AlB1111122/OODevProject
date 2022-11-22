@@ -7,6 +7,10 @@ public class ReservationDate implements Comparable{
    private int month;
    private int day;
 
+   /**
+    * takes a string and turns it into a Date
+    * @param input a string input of the date
+    */
    public ReservationDate(String input){
       StringTokenizer in = null;
       if(input.contains("/")){
@@ -36,18 +40,35 @@ public class ReservationDate implements Comparable{
       year = tokens[2];
    }
 
+   /**
+    * returns the day of the month the date is
+    * @return the day int
+    */
    public int getDay(){
       return day;
    }
 
+   /**
+    * returns the month the date is in
+    * @return an int of the month
+    */
    public int getMonth(){
       return month;
    }
 
+   /**
+    * returns the year the date is in
+    * @return an int of the year
+    */
    public int getYear() {
       return year;
    }
-@Override
+
+   /**
+    * returns a string representing the date
+    * @return String of the date
+    */
+   @Override
    public String toString(){
       String dayS = "" + day;
       if(day < 10){
@@ -64,6 +85,11 @@ public class ReservationDate implements Comparable{
       return String.format("%s/%s/%s",dayS,monthS,yearS);
    }
 
+   /**
+    * compares the string of two dates to tell if they are equal
+    * @param o the object to be compared. is cast to a string
+    * @return 0 if the dates are the same or -1
+    */
    @Override
    public int compareTo(Object o) {
       if(this.toString().compareTo(o.toString()) == 0){
