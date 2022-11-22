@@ -30,7 +30,7 @@ public class CheffPage extends Application {
         this.kitchen = restaurant.getKitchen();
     }
 
-    Label waitLMessage = new Label("gffdfagf");
+    Label waitLMessage = new Label("");
 
     @Override
     public void start(Stage stage) {

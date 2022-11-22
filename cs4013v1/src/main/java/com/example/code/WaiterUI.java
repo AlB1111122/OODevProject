@@ -9,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -52,6 +53,10 @@ public class WaiterUI extends Application {
         takeOrderBut.setAlignment(Pos.CENTER);
         takeOrderBut.setPrefSize(300,25);
 
+        Button takePaymentBut = new Button("Take payment");
+        takePaymentBut.setAlignment(Pos.BOTTOM_CENTER);
+        takePaymentBut.setPrefSize(300,25);
+
         ArrayList<String> redO = new ArrayList<>();
         for(Order o: kitchen.getReadyOrders()){
             redO.add(o.toKitchenString());
@@ -70,11 +75,11 @@ public class WaiterUI extends Application {
         reayOrdersLabel.setTextFill(Color.WHITE);
 
         Button deliverOrderBut = new Button("Set order deliverd");
-        deliverOrderBut.setAlignment(Pos.CENTER_RIGHT);
+        deliverOrderBut.setAlignment(Pos.CENTER);
         deliverOrderBut.setPrefSize(150,25);
 
         Button refeshOrderBut = new Button("Refresh orders");
-        refeshOrderBut.setAlignment(Pos.CENTER_LEFT);
+        refeshOrderBut.setAlignment(Pos.CENTER);
         refeshOrderBut.setPrefSize(150,25);
 
         GridPane butGrid = new GridPane();
@@ -84,12 +89,12 @@ public class WaiterUI extends Application {
         //ready order list: make listPane
         FlowPane readyOrderPane = new FlowPane(reayOrdersLabel,readyOrders,butGrid);
         readyOrderPane.setAlignment(Pos.BOTTOM_CENTER);
-        readyOrderPane.setPrefSize(300,450);
+        readyOrderPane.setPrefSize(300,470);
 
-        VBox waiterButtons = new VBox(takeWalkInBut,takeOrderBut,readyOrderPane);
+        VBox waiterButtons = new VBox(takeWalkInBut,takeOrderBut,takePaymentBut,readyOrderPane);
         //waiterButtons.setOrientation(Orientation.VERTICAL);
         waiterButtons.setSpacing(10);
-        waiterButtons.setPrefSize(300,520);
+        waiterButtons.setPrefSize(300,560);
         Pane p = new Pane(waiterButtons);
         Scene home = new Scene(p);
 
@@ -98,10 +103,13 @@ public class WaiterUI extends Application {
         grid.setVgap(1.5);
         grid.setAlignment(Pos.TOP_CENTER);
 
+        dateTakenInfo.setAlignment(Pos.CENTER);
+
         FlowPane base = new FlowPane(grid,dateTakenInfo);
+        base.setOrientation(Orientation.VERTICAL);
         base.setAlignment(Pos.TOP_CENTER);
 
-        Scene takeWalkInScene = new Scene(base,650,130);
+        Scene takeWalkInScene = new Scene(base,675,130);
 
         Label numPeople = new Label("Enter the number of people you are booking for: ");
         numPeople.setPrefSize(300,20);
@@ -137,11 +145,35 @@ public class WaiterUI extends Application {
         menuCat.setPrefSize(1500,700);
         Scene takeOrderScene = new Scene(menuCat);
 
+        //finish when oreder is made
+
+        //take bill page
+        GridPane billGrid = new GridPane();
+
+        Label tablePayingLabel = new Label("Table paying");
+        billGrid.add(tablePayingLabel,0,0);
+        //finnish once bill is made
+
+        //table comboBox
+        Integer[] tables = new Integer[restaurant.getTables().size()];
+        for(int i = 1; i <= tables.length; i++){
+            tables[i - 1] = i;
+        }
+        ComboBox<Integer> selectTable = new ComboBox<>(FXCollections.observableArrayList(tables));
+        selectTable.setVisible(true);
+        selectTable.setPrefSize(300,20);
+        billGrid.add(selectTable,1,0);
+
+        Pane billPay = new Pane(billGrid);
+        billPay.setPrefSize(400,400);
+        Scene takeBillScene = new Scene(billPay);
+
         //actions
         //home
         takeWalkInBut.setOnAction(e -> primaryStage.setScene(takeWalkInScene));
         returnFromBook.setOnAction(e -> primaryStage.setScene(home));
         takeOrderBut.setOnAction(e -> primaryStage.setScene(takeOrderScene));
+        takePaymentBut.setOnAction(e -> primaryStage.setScene(takeBillScene));
         refeshOrderBut.setOnAction(actionEvent -> {
             ArrayList<String> ord = new ArrayList<>();
             for(Order o: kitchen.getReadyOrders()){
@@ -176,7 +208,11 @@ public class WaiterUI extends Application {
                 phNo = getPhoneNo();
                 phoneNumerIn.setBackground(Background.fill(Color.WHITE));
                 String tableNo = restaurant.addReservation(noP,new ReservationDate(LocalDate.now().toString()),new ReservationTime(LocalTime.now().toString().substring(0,5)),phNo,name);
-                dateTakenInfo.setText(String.format("table %s",tableNo.substring(22,24)));
+                if(!tableNo.contains("Reservation")){
+                    dateTakenInfo.setText(tableNo);
+                }else {
+                    dateTakenInfo.setText(String.format("table %s", tableNo.substring(22, 24)));
+                }
             }catch(IOException ex){
                 dateTakenInfo.setText(ex.getMessage());
             }

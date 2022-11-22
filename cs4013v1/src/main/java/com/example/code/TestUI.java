@@ -22,6 +22,11 @@ public class TestUI extends Application {
         Restaurant rL = y.getResturaunt("Limerick");
         rL.addTable(4);
         rL.addTable(4);
+        Waiter w = new Waiter("alex",123345,"password");
+        Cheff c = new Cheff("bee",1233455,"password");
+        rL.addEmployee(c);
+        rL.addEmployee(w);
+
         ArrayList<Dish> orderDishes = new ArrayList<>();
         Dish d1 = new Dish(1,"1");
         orderDishes.add(d1);
@@ -42,10 +47,6 @@ public class TestUI extends Application {
 
         Kitchen k = rL.getKitchen();
 
-        //CheffPage cheff = new CheffPage();
-        //cheff.setRestaurant(rL);
-        WaiterUI waiter = new WaiterUI();
-        waiter.setRestaurant(rL);
         rL.getKitchen().addOrder(rL.makeOrder(1,orderDishes));
         rL.getKitchen().addOrder(rL.makeOrder(2,orderDishes2));
         rL.getKitchen().addOrder(rL.makeOrder(2,orderDishes3));
@@ -58,10 +59,10 @@ public class TestUI extends Application {
         k.setDishReady(0);
         k.setDishReady(0);
         k.setDishReady(0);
-        waiter.start(primaryStage);
         k.setDishReady(0);
-        k.setDishReady(0);
-        k.setDishReady(0);
+        EmployeeUI e = new EmployeeUI();
+        e.setYum(y);
+        e.start(primaryStage);
     }
 
 

@@ -7,6 +7,16 @@ public class Kitchen {
     private ArrayList<Dish> cookingDishes = new ArrayList<>();
     private ArrayList<Dish> readyDishes = new ArrayList<>();
     private ArrayList<Order> orders = new ArrayList<>();
+    private ArrayList<Order> deliverdOrders = new ArrayList<>();
+
+    public ArrayList<String> getDeliverdOrdersString() {
+        ArrayList<String> ords = new ArrayList<>();
+        for(Order o:deliverdOrders){
+            ords.add(o.toKitchenString());
+        }
+        return ords;
+    }
+
     public void setCooking(int selection) throws RuntimeException{
         cookingDishes.add(watingDishes.get(selection));
         watingDishes.remove(selection);
@@ -52,6 +62,7 @@ public class Kitchen {
 
     public void takeReadyOrder(int selection){
         Order order = getReadyOrders().get(selection);
+        deliverdOrders.add(order);
         orders.remove(order);
     }
 
