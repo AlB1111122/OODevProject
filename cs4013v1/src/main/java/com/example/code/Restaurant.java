@@ -11,7 +11,6 @@ import java.util.ArrayList;
 public class Restaurant{
     private int restaurantID;
     private int capacity;
-
     private static int orders;
     private int reservations;
 
