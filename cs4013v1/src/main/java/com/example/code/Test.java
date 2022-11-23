@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class Test {
@@ -28,7 +29,7 @@ public class Test {
 
         y.addResturaunt("Killkey");
         try {
-            FileWriter resturauntWrite = new FileWriter(new File("CSVfiles/Resturaunts.csv"));
+            FileWriter resturauntWrite = new FileWriter("CSVfiles/Resturaunts.csv");
             for(Restaurant r:y.getRestaurants()){
                 resturauntWrite.append(r.getLocation()).append(",");
             }
@@ -36,5 +37,7 @@ public class Test {
         }catch(IOException ex){
             System.out.println(ex.getMessage());
         }
+
+
     }
 }

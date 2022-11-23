@@ -38,6 +38,24 @@ public class Restaurant{
         setCapacity();
     }
 
+    public void setBills(){
+       for(Order o:kitchen.getDeliverdOrders()){
+           if(!bills.contains(o.getBill())) {
+               bills.add(o.getBill());
+           }
+       }
+    }
+
+    public ArrayList<Bill> getUnpaidBills(){
+        ArrayList<Bill> unpaid = new ArrayList<>();
+        for(Bill b:bills){
+            if(b.getIsPaid()){
+                unpaid.add(b);
+            }
+        }
+        return unpaid;
+    }
+
     public ArrayList<MenuCatagory> getMenu() {
         return menu;
     }

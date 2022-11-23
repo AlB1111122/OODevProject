@@ -21,13 +21,13 @@ public class Dish{
     private String notes;
 
 
-    Dish(String name,int price){
+    Dish(String name,double price){
         dishName = name;
         this.price = price;
         ready = false;
     }
 
-    Dish(String name,int price, String notes){
+    Dish(String name,double price, String notes){
         dishName = name;
         this.price = price;
         ready = false;

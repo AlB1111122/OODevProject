@@ -30,6 +30,10 @@ public class Kitchen {
         return ords;
     }
 
+    public ArrayList<Order> getDeliverdOrders() {
+        return deliverdOrders;
+    }
+
     /**
      * remove a dish from the waiting list and adds it to the cooking list
      * @param selection the index of the selected dish

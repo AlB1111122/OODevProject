@@ -26,28 +26,29 @@ public class Bill {
     private boolean isPaid;
     private ReservationDate date;
 
-
-
     private ArrayList<Dish> order = new ArrayList<>();
-    int i;
 
 
     Bill(int tableID,ArrayList<Dish> order, double price, ReservationDate date) {
-        for(int i = 0; i < order.size(); i++ ) {
-                price += order.get(i).getPrice();
+        for (Dish dish : order) {
+            price += dish.getPrice();
         }
         this.tableID = tableID;
         this.isPaid = false;
         this.date = date;
     }
 
-    public double totalDue() {
+    private double totalDue() {
         double totalCost;
         totalCost = price + (price * tipPercent);
         return totalCost;
     }
 
-
+    public void payBill(int tipPercent,boolean isCash){
+        this.tipPercent = tipPercent;
+        this.isCash = isCash;
+        this.isPaid = true;
+    }
 
     public void setPrice(int price) {
         this.price = price;
@@ -73,7 +74,29 @@ public class Bill {
         this.isPaid = isPaid;
     }
 
+    public int getTableID() {
+        return tableID;
+    }
+
     public boolean getIsPaid(){
         return isPaid;
+    }
+    @Override
+    public String toString(){
+        String payMth = "";
+        String dishes = "";
+        for(Dish d:order){
+            dishes = dishes + "\n"+ d.toString();
+        }
+        if(isCash){
+            payMth = "Payed with cash";
+        }else{
+            payMth = "Payed with card";
+        }
+        if(isPaid) {
+            return String.format("Bill:\nPrice: %.2f\tTip: %d%%\n%s\nTotal: %.2f\nDishes:%s",price,tipPercent,payMth,totalDue(),dishes);
+        }else{
+            return String.format("Bill:\nPrice: %.2f\nDishes:%s",price,dishes);
+        }
     }
 }

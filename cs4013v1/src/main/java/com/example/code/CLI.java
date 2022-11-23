@@ -1,12 +1,21 @@
 package com.example.code;
 
+import com.example.code.calender.ReservationDate;
+import com.example.code.calender.ReservationTime;
+import javafx.event.ActionEvent;
+
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class CLI {
     Yum yum;
-    Restaurant resturaunt;
-    Scanner in;
+    Restaurant restaurant;
+
+    Kitchen kitchen;
+    Scanner in = new Scanner(System.in);
 
     CLI(Yum yum){
         this.yum = yum;
@@ -39,15 +48,14 @@ public class CLI {
     public void signInPage() throws IOException {
         Employee signedIn = null;
         boolean blocked = true;
-        boolean more = true;
-        while(more) {
             while (blocked) {
                 System.out.println("Enter the location you work at");
                 String locationIn = in.nextLine();
                 if (yum.getRestrauntLocations().contains(locationIn)) {
-                    resturaunt = yum.getResturaunt(locationIn);
+                    restaurant = yum.getResturaunt(locationIn);
+                    kitchen = restaurant.getKitchen();
                     blocked = false;
-                }else{
+                } else {
                     System.out.println("That location doesn't exist");
                 }
             }
@@ -55,13 +63,15 @@ public class CLI {
             while(blocked){
                 System.out.println("Enter your employee Id");
                 String idIn = in.nextLine();
-                    for(Employee e:resturaunt.getEmployees()){
+                    for(Employee e: restaurant.getEmployees()){
                         if(e.getID().equals(idIn)){
                             signedIn = e;
                             blocked = false;
                         }
                     }
-                System.out.println("No employee with that Id at this location");
+                    if(signedIn == null) {
+                        System.out.println("No employee with that Id at this location");
+                    }
             }
             blocked = true;
             while(blocked){
@@ -69,15 +79,197 @@ public class CLI {
                 String passwordIn = in.nextLine();
                 if(signedIn.getPassword().equals(passwordIn)){
                     blocked = false;
+                }else {
+                    System.out.println("Incorrect password");
                 }
-                System.out.println("Incorrect password");
+            }
+        if(signedIn instanceof Cheff){
+            cheffPage();
+        }else if(signedIn instanceof Waiter){
+            waiterPage();
+        }
+    }
+    public void cheffPage() throws IOException {
+        boolean blocked = true;
+        while(blocked){
+            System.out.println("0)Exit. 1)Waiting dishes. 2)Cooking dishes.");
+            String dishListChoice = in.nextLine();
+            if(dishListChoice.equals("0")){
+                throw new IOException("System closed");
+            }else if(dishListChoice.equals("1")){
+                int i = 1;
+                for(String s:kitchen.getWatingDishString()){
+                    System.out.println(i + ") " + s);
+                    i++;
+                }
+                String wDishSelected = in.nextLine();
+                try{
+                    kitchen.setCooking(Integer.parseInt(wDishSelected) - 1);
+                }catch(NumberFormatException | IndexOutOfBoundsException ex){
+                    System.out.println(ex.getMessage());
+                }
+            }else if(dishListChoice.equals("2")){
+                int i = 1;
+                for(String s:kitchen.getCookingDishString()){
+                    System.out.println(i + ") " + s);
+                    i++;
+                }
+                String wDishSelected = in.nextLine();
+                try{
+                    kitchen.setDishReady(Integer.parseInt(wDishSelected) - 1);
+                }catch(NumberFormatException | IndexOutOfBoundsException ex){
+                    System.out.println(ex.getMessage());
+                }
+            }else{
+                System.out.println("Invalid input");
             }
         }
-        if(signedIn instanceof Cheff){
-            //cheffPage();
-            blocked = false;
+    }
+
+    public void waiterPage() throws IOException {
+        boolean blocked = true;
+        while (blocked) {
+            System.out.println("0)Exit. 1)Deliver order. 2)Take walk-in. 3)Take payment");
+            String waiterChoice = in.nextLine();
+            if (waiterChoice.equals("0")) {
+                throw new IOException("System closed");
+            }else if(waiterChoice.equals("1")){
+                System.out.println("Orders ready for delivery:");
+                int i = 1;
+                for(Order o:kitchen.getReadyOrders()){
+                    System.out.println(i + ") " + o.toKitchenString());
+                    i++;
+                }
+                String wDishSelected = in.nextLine();
+                try{
+                    kitchen.takeReadyOrder(Integer.parseInt(wDishSelected) - 1);
+                    restaurant.setBills();
+                }catch(NumberFormatException | IndexOutOfBoundsException ex){
+                    System.out.println(ex.getMessage());
+                }
+            }else if(waiterChoice.equals("2")){
+                System.out.println("Take walk in appointment\n" +
+                        "Enter [number of people],[A member of the groups phone number],[A member of the groups name]");
+                String[] walkInInfo = in.nextLine().split(",");
+                if(walkInInfo.length - 3 == 0){
+                    int noP = 0;
+                    String name = null;
+                    int phNo = 0;
+                    try {
+                        noP = numPeople(walkInInfo[0]);
+                        name = getName(walkInInfo[1]);
+                        phNo = getPhoneNo(walkInInfo[2]);
+                        String tableNo = restaurant.addReservation(noP,new ReservationDate(LocalDate.now().toString()),new ReservationTime(LocalTime.now().toString().substring(0,5)),phNo,name);
+                        if(!tableNo.contains("Reservation")){
+                            System.out.println(tableNo);
+                        }else {
+                            System.out.printf("table %s%n", tableNo.substring(22, 24));
+                        }
+                    }catch(IOException ex){
+                        System.out.println(ex.getMessage());
+                    }
+                }
+            }else if(waiterChoice.equals("3")){
+                System.out.println("Select the table paying");
+                for(Table t: restaurant.getTables()){
+                    System.out.println(t.getTableID());
+                }
+                String payingIn = in.nextLine();
+                int tableSel = -1;
+                try {
+                    tableSel = Integer.parseInt(payingIn);
+                    assert tableSel != -1;
+                    ArrayList<Bill> bills = new ArrayList<>();
+                    for(Bill b:restaurant.getUnpaidBills()){
+                        if(b.getTableID() - tableSel == 0){
+                            bills.add(b);
+                        }
+                    }
+                    boolean block2 = true;
+                    while(block2) {
+                        System.out.println("Enter: [tip percentage],[(if payed by cash)Y/N]");
+                        String payBillIn = in.nextLine();
+                        String[] payBillarr = payBillIn.split(",");
+                        if((payBillarr.length - 2 == 0)){
+                            try{
+                                int tip = numPeople(payBillarr[0]);
+                                boolean cash = true;
+                                if(payBillarr[1].equalsIgnoreCase("N")){
+                                    cash = false;
+                                }else if(!(payBillarr[1].equalsIgnoreCase("Y"))){
+                                    System.out.println("Invalid input");
+                                    block2 = false;
+                                }
+                                if (!bills.isEmpty()) {
+                                    for (Bill b : bills) {
+                                        b.payBill(tip,cash);
+                                    }
+                                }
+                            }catch(IOException ex){
+                                System.out.println("Invalid input");
+                            }
+                        }else{
+                            System.out.println("Invalid input");
+                        }
+                    }
+                }catch(NumberFormatException ex){
+                    System.out.println();
+                }
+
+                //for(Order o: kitchen.getDeliverdOrders()){
+                //    System.out.println(o.getBill().toString());
+                //}
+            }
+        }
+    }
+
+    /**
+     * processes string for taking walk ins
+     * @param no the string of the number of people entered
+     * @return returns no in an int form
+     * @throws IOException throws exeption no is invalid input
+     */
+    private int numPeople(String no)throws IOException{
+        if (!no.isEmpty()) {
+            try {
+                return Integer.parseInt(no);
+            }catch(NumberFormatException ex){
+                throw new IOException("Invalid number of people");
+            }
         }else{
-            //waterPage();
+            throw new IOException("Invalid number of people");
+        }
+    }
+
+    /**
+     * returns the name of the person booking after being checked for correctness
+     * @param in string being checked, should be a name
+     * @return returns the name input
+     * @throws IOException if input is invalid throws exeption
+     */
+    private String getName(String in)throws IOException{
+        if(!in.isEmpty() && !(in.matches("[a-zA-Z]"))){
+            return in;
+        }else{
+            throw new IOException("Invalid name");
+        }
+    }
+
+    /**
+     * returns phone number as int after checking it
+     * @param no the string of a number entered
+     * @return the int of the string
+     * @throws IOException if the string is empty or contains lettwrs
+     */
+    private int getPhoneNo(String no)throws IOException{
+        if (!no.isEmpty()) {
+            try {
+                return Integer.parseInt(no);
+            }catch(NumberFormatException ex){
+                throw new IOException("Invalid phone number");
+            }
+        }else{
+            throw new IOException("Invalid phone number");
         }
     }
 }

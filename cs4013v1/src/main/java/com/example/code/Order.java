@@ -19,7 +19,7 @@ public class Order{
     private int tableID;
     private ArrayList<Dish> dishes = new ArrayList<Dish>();
     private boolean ready;
-    Bill bill;
+    private Bill bill;
     Order(int orderId, int tableID,ArrayList<Dish> dishes){
         this.orderId = orderId;
         this.tableID = tableID;
