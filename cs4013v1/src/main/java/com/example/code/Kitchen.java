@@ -3,6 +3,15 @@ package com.example.code;
 import java.util.ArrayList;
 
 public class Kitchen {
+
+ /*
+ * Constructs a new kitchen
+    * @param watingDishes   - arrayList of dishes waiting to be prepared
+    * @param cookingDishes  - arrayList of dishes currently being prepared
+    * @param readyDishes    - arrayList of dishes currently ready
+    * @param orders         - arrayList of orders
+     * */
+
     private ArrayList<Dish> watingDishes = new ArrayList<>();
     private ArrayList<Dish> cookingDishes = new ArrayList<>();
     private ArrayList<Dish> readyDishes = new ArrayList<>();
