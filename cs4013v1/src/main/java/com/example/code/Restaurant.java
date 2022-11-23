@@ -19,18 +19,22 @@ public class Restaurant{
     private ArrayList<Employee> employees = new ArrayList<Employee>();
     private ArrayList<Customer> customers = new ArrayList<Customer>();
     private ArrayList<MenuCatagory> menu = new ArrayList<>();
+
+    private ArrayList<Bill> bills = new ArrayList<>();
     private Kitchen kitchen = new Kitchen();
 
     public Restaurant(int restaurantID, String location){
         this.restaurantID = restaurantID;
         this.location = location;
     }
-    public Restaurant(int restaurantID, String location,ArrayList<Table> tables,ArrayList<Customer> customers,ArrayList<MenuCatagory> menu){
+    public Restaurant(int restaurantID, String location,ArrayList<Table> tables,ArrayList<Customer> customers,ArrayList<MenuCatagory> menu,ArrayList<Bill> bills){
         this.restaurantID = restaurantID;
         this.location = location;
         this.tables = tables;
+        getReservations();
         this.customers = customers;
         this.menu = menu;
+        this.bills = bills;
         setCapacity();
     }
 
@@ -46,8 +50,8 @@ public class Restaurant{
         ArrayList<Reservation> reservations = new ArrayList<>();
         for(Table t:tables){
             reservations.addAll(t.getCalender().getReservations());
-            this.reservations++;
         }
+        this.reservations = reservations.size();
         return reservations;
     }
 
@@ -178,6 +182,7 @@ public class Restaurant{
         }
         return new Order(orders,tableId,dishes);
     }
+
 }
 
 

@@ -1,5 +1,7 @@
 package com.example.code;
 
+import com.example.code.calender.ReservationDate;
+
 import java.util.ArrayList;
 
 public class Bill {
@@ -17,23 +19,26 @@ public class Bill {
 
 
     
-    int price;
-    int tipPercent;
-    boolean isCash;
-    boolean isPaid;
+    private int price;
+    private int tipPercent;
+    private boolean isCash;
+    private boolean isPaid;
+    private ReservationDate date;
+
+
 
     private ArrayList<Dish> order = new ArrayList<>();
     int i;
 
 
-    Bill(ArrayList<Dish> order, int price, int tipPercent, boolean isCash, boolean isPaid) {
+    Bill(ArrayList<Dish> order, int price, int tipPercent, boolean isCash, boolean isPaid, ReservationDate date) {
         for(int i = 0; i < order.size(); i++ ) {
                 price += order.get(i).getPrice();
         }
         this.tipPercent = tipPercent;
         this.isCash = isCash;
         this.isPaid = isPaid;
-
+        this.date = date;
     }
 
     public int totalDue() {
