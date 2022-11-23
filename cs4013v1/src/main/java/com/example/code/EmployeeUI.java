@@ -28,20 +28,29 @@ public class EmployeeUI extends Application {
     }
     @Override
     public void start(Stage primaryStage) {
+    
+    /*Start page
+        * Employee sign in
+        *
+        * */
         primaryStage.setTitle("Employee sign in");
 
         Label signInLabel = new Label("Sign in");
         signInLabel.setAlignment(Pos.CENTER);
         signInLabel.setPrefSize(350,25);
         Pane p = new Pane(signInLabel);
-
+        
+        /*Sign in ID + Input*/
         Label nameLabel = new Label("Employee ID:");
         nameLabel.setPrefSize(150,25);
         nameLabel.setAlignment(Pos.CENTER_LEFT);
+     
+        /*Password + Input*/
         Label passwordLabel = new Label("Employee password");
         passwordLabel.setPrefSize(150,25);
         passwordLabel.setAlignment(Pos.CENTER_LEFT);
 
+        /*Location + Input*/
         Label locationLabel = new Label("Enter location");
         locationLabel.setPrefSize(150,25);
         locationLabel.setAlignment(Pos.CENTER_LEFT);
@@ -79,13 +88,17 @@ public class EmployeeUI extends Application {
         signInPane.setLayoutY(10);
         signInPane.setBackground(Background.fill(Color.WHITE));
 
+        
+        //Button actions
         signInBut.setOnAction(actionEvent -> {
+         /*Checks if input is empty*/
             if(!IdIn.getText().isEmpty() && !passwordIn.getText().isEmpty()){
                 try {
                     restaurant = yum.getResturaunt(location.getValue());
                 } catch (IOException e) {
                     signInLabel.setText("No location selected");
                 }
+              /*Checks if sign-in is valid*/
                 for(Employee emp:restaurant.getEmployees()){
                     if(emp.getID().equals(IdIn.getText())){
                         if(emp.getPassword().equals(passwordIn.getText())){
@@ -103,6 +116,10 @@ public class EmployeeUI extends Application {
                 signInLabel.setText("Please enter your ID and password");
                 return;
             }
+            /*Checks the type of employee and runs the UI accordingly
+            * @see CheffPage
+            * @see WaiterUI
+            * */
             if(signedIn != null) {
                 if (signedIn instanceof Cheff) {
                     CheffPage cheffPage = new CheffPage();
