@@ -17,6 +17,14 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+ /*
+    * This page represents the Cheff's activities.
+    * (Waiting orders, orders in progress, finished orders)
+    *
+    *
+    * */
+
+
 public class CheffPage extends Application {
     Restaurant restaurant = new Restaurant(0,"test");
     Kitchen kitchen = new Kitchen();
