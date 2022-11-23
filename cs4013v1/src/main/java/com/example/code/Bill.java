@@ -18,8 +18,9 @@ public class Bill {
     // */
 
 
+    private int tableID;
     
-    private int price;
+    private double price;
     private int tipPercent;
     private boolean isCash;
     private boolean isPaid;
@@ -31,18 +32,17 @@ public class Bill {
     int i;
 
 
-    Bill(ArrayList<Dish> order, int price, int tipPercent, boolean isCash, boolean isPaid, ReservationDate date) {
+    Bill(int tableID,ArrayList<Dish> order, double price, ReservationDate date) {
         for(int i = 0; i < order.size(); i++ ) {
                 price += order.get(i).getPrice();
         }
-        this.tipPercent = tipPercent;
-        this.isCash = isCash;
-        this.isPaid = isPaid;
+        this.tableID = tableID;
+        this.isPaid = false;
         this.date = date;
     }
 
-    public int totalDue() {
-        int totalCost;
+    public double totalDue() {
+        double totalCost;
         totalCost = price + (price * tipPercent);
         return totalCost;
     }
@@ -53,7 +53,7 @@ public class Bill {
         this.price = price;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
@@ -63,6 +63,10 @@ public class Bill {
 
     public int getTipPercent(){
         return tipPercent;
+    }
+
+    public void setCash(boolean cash){
+        this.isCash = cash;
     }
 
     public void setIsPaid(boolean isPaid) {

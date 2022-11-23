@@ -1,5 +1,8 @@
 package com.example.code;
 
+import com.example.code.calender.ReservationDate;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Order{
@@ -16,6 +19,7 @@ public class Order{
     private int tableID;
     private ArrayList<Dish> dishes = new ArrayList<Dish>();
     private boolean ready;
+    Bill bill;
     Order(int orderId, int tableID,ArrayList<Dish> dishes){
         this.orderId = orderId;
         this.tableID = tableID;
@@ -53,7 +57,16 @@ public class Order{
                 ready = true;
             }
         }
+        double price = 0;
+        for(Dish d: dishes){
+            price = price + d.getPrice();
+        }
+        bill = new Bill(tableID,dishes,price,new ReservationDate(LocalDate.now().toString()));
         return ready;
+    }
+
+    public Bill getBill() {
+        return bill;
     }
 
     public String toKitchenString() {
