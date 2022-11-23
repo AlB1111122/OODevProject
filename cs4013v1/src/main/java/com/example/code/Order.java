@@ -3,6 +3,15 @@ package com.example.code;
 import java.util.ArrayList;
 
 public class Order{
+
+/*
+    * @param orderId    - ID number to represent the order
+    * @param tableID    - ID to represent the table the order is assigned to
+    * @param dishes     - list of dishes included in the order
+    * @param ready      - boolean to determine if dish is ready
+    *
+    * */
+
     private final int orderId;
     private int tableID;
     private ArrayList<Dish> dishes = new ArrayList<Dish>();
