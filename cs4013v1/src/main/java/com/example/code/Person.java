@@ -3,6 +3,15 @@ package com.example.code;
 import java.util.ArrayList;
 
 public abstract class Person{
+ //*
+    // This creates a new Person
+    // @param name         - returns the name of a person
+    // @param phoneNumber  - returns the number of a person
+    // @param ID           - returns the ID of a person
+    // @param complaints   - returns an arraylist for complaints
+    //
+    // */
+    
     private String ID;
     private String name;
     private int phoneNumber;
@@ -53,6 +62,14 @@ public abstract class Person{
             return false;
         }
     }
+    
+    /*
+     * This method creates a complaint
+     * @param complainer     - inputs the name of the complainer
+     * @param complainAbout  - inputs the subject line of the complaint
+     * @param description    - inputs the information about the complaint
+     *
+     * */
 
     public void makeComplaint(Person complainer, Person complaintAbout, String description){
         Complaint comp = new Complaint(complainer, complaintAbout, description);
