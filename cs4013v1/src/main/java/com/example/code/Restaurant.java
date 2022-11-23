@@ -20,15 +20,33 @@ public class Restaurant{
     private ArrayList<Customer> customers = new ArrayList<Customer>();
     private ArrayList<MenuCatagory> menu = new ArrayList<>();
     private Kitchen kitchen = new Kitchen();
+
     public Restaurant(int restaurantID, String location){
         this.restaurantID = restaurantID;
         this.location = location;
+    }
+    public Restaurant(int restaurantID, String location,ArrayList<Table> tables,ArrayList<Customer> customers,ArrayList<MenuCatagory> menu){
+        this.restaurantID = restaurantID;
+        this.location = location;
+        this.tables = tables;
+        this.customers = customers;
+        this.menu = menu;
+        setCapacity();
+    }
+
+    public ArrayList<MenuCatagory> getMenu() {
+        return menu;
+    }
+
+    public void addMenuCatagory(String catagoryName,String[][] dishes){
+        menu.add(new MenuCatagory(catagoryName,dishes));
     }
 
     public ArrayList<Reservation> getReservations(){
         ArrayList<Reservation> reservations = new ArrayList<>();
         for(Table t:tables){
             reservations.addAll(t.getCalender().getReservations());
+            this.reservations++;
         }
         return reservations;
     }

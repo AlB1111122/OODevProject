@@ -13,6 +13,9 @@ public class ReservationCalendar{
       Reservations.add(res);
    }
 
+   public void addAll(ArrayList<Reservation> res){
+      Reservations.addAll(res);
+   }
    /**
     * returns all the reservations booked for the given day
     * @param day the day being searched for reservations for

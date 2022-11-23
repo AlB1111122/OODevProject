@@ -5,6 +5,8 @@ import com.example.code.calender.ReservationCalendar;
 import com.example.code.calender.ReservationDate;
 import com.example.code.calender.ReservationTime;
 
+import java.util.ArrayList;
+
 public class Table{
     private int tableID;
     private int seats;
@@ -13,6 +15,12 @@ public class Table{
     Table(int seats, int tableID){
         this.tableID = tableID;
         this.seats = seats;
+    }
+
+    Table(int seats, int tableID, ArrayList<Reservation> reservations){
+        this.tableID = tableID;
+        this.seats = seats;
+        cal.addAll(reservations);
     }
 
     public int getTableID(){
