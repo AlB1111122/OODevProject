@@ -14,12 +14,6 @@ public class Dish{
     * */
 
     private int orderId;
-    private String[] dishes = {"BBQ wings","Spring rolls","Nachos","Bruschetta",
-            "Peperoni pizza","Margherita pizza","Cheese burger with lettuce and tomato","Vegetable soup","Carbonara","Steak served with roast vegtables",
-    "Chips","Mashed potato","Steamed vegetables","Soda bread and butter",
-    "Vanilla ice cream","Chocolate cake","Apple pie with whipped cream",
-            "Coke","Sprite","Club orange","Rinforzo","Guinness","Hiniken"};
-    private double[] dishesPrice = {3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3};
     private String dishName;
     private double price;
     private boolean ready;
@@ -27,15 +21,15 @@ public class Dish{
     private String notes;
 
 
-    Dish(int selection){//reset to not be public later for testing purposes
-        dishName = dishes[selection];
-        price = dishesPrice[selection];
+    Dish(String name,int price){
+        dishName = name;
+        this.price = price;
         ready = false;
     }
 
-    Dish(int selection, String notes){
-        dishName = dishes[selection];
-        price = dishesPrice[selection];
+    Dish(String name,int price, String notes){
+        dishName = name;
+        this.price = price;
         ready = false;
         this.notes = notes;
     }

@@ -18,6 +18,7 @@ public class Restaurant{
     private ArrayList<Table> tables = new ArrayList<Table>();
     private ArrayList<Employee> employees = new ArrayList<Employee>();
     private ArrayList<Customer> customers = new ArrayList<Customer>();
+    private ArrayList<MenuCatagory> menu = new ArrayList<>();
     private Kitchen kitchen = new Kitchen();
     public Restaurant(int restaurantID, String location){
         this.restaurantID = restaurantID;
