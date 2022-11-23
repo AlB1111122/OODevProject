@@ -16,6 +16,7 @@ public class Bill {
     // */
 
 
+    
     int price;
     int tipPercent;
     boolean isCash;
