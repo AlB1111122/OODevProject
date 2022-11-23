@@ -31,6 +31,7 @@ public class WaiterUI extends Application {
     private TextField timeIn = new TextField();
     private TextField nameIn = new TextField();
     private TextField phoneNumerIn = new TextField();
+    private TextField tipIn = new TextField();
     private Label dateTakenInfo = new Label("");
     public static void main(String[] args) {
         launch(args);
@@ -164,9 +165,31 @@ public class WaiterUI extends Application {
         selectTable.setPrefSize(300,20);
         billGrid.add(selectTable,1,0);
 
+        Label cashOrCard = new Label("Cash or Card");
+        billGrid.add(cashOrCard,0,1);
+
+        ComboBox<String> cashOrCardBox = new ComboBox<>(FXCollections.observableArrayList(
+                        "Cash",
+                        "Card"
+                ));
+
+        billGrid.add(cashOrCardBox,1,1);
+
+        Label tip = new Label("Tip (percentage):");
+        tip.setPrefSize(300,20);
+        billGrid.add(tip,0,2);
+
+        tipIn.setPrefSize(300,20);
+        billGrid.add(tipIn,1,2);
+
         Pane billPay = new Pane(billGrid);
         billPay.setPrefSize(400,400);
         Scene takeBillScene = new Scene(billPay);
+
+        Button calculateBill =  new Button ("Calculate bill");
+        calculateBill.setPrefSize(300,25);
+        billGrid.add(calculateBill, 0,3);
+
 
         //actions
         //home
@@ -190,6 +213,15 @@ public class WaiterUI extends Application {
             ready.setAll(ord);
         });
         bookBut.setOnAction(new BookingController());
+        calculateBill.setOnAction(actionEvent -> {
+            ArrayList<String> ord = new ArrayList<>();
+            for(Order o: kitchen.getReadyOrders()){
+                o.getBill();
+
+            }
+
+
+        });
 
         primaryStage.setScene(home);
         primaryStage.show();
