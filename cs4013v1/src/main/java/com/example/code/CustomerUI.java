@@ -44,6 +44,12 @@ public class CustomerUI extends Application{
     }
     @Override
     public void start(Stage stage){
+    
+     /*
+        * This is the start page.
+        *
+        * */
+        
         GridPane grid = new GridPane();
         grid.setVgap(1.5);
         grid.setAlignment(Pos.TOP_CENTER);
@@ -53,13 +59,15 @@ public class CustomerUI extends Application{
 
         Scene bookPage = new Scene(base,660,210);
 
+        /* Number of customers + Input */
         Label numPeople = new Label("Enter the number of people you are booking for: ");
         numPeople.setPrefSize(300,20);
         grid.add(numPeople,0,0);
 
         numPeopleIn.setPrefSize(300,20);
         grid.add(numPeopleIn,1,0);
-
+        
+        /*Date + Input */
         Label day = new Label("Select a date");
         day.setPrefSize(300,20);
         grid.add(day,0,1);
@@ -67,13 +75,15 @@ public class CustomerUI extends Application{
         dayIn.setPrefSize(300,20);
         grid.add(dayIn,1,1);
 
+        /*Time + Input */
         Label time = new Label("Enter the time you wish to book for:");
         time.setPrefSize(300,20);
         grid.add(time,0,2);
 
         timeIn.setPrefSize(300,20);
         grid.add(timeIn,1,2);
-
+        
+         /*Name + Input*/
         Label name = new Label("Enter your name:");
         name.setPrefSize(300,20);
         grid.add(name,0,3);
@@ -81,6 +91,7 @@ public class CustomerUI extends Application{
         nameIn.setPrefSize(300,20);
         grid.add(nameIn,1,3);
 
+        /*Phone Number + Input */
         Label phoneNumer = new Label("Enter your phone number:");
         phoneNumer.setPrefSize(300,20);
         grid.add(phoneNumer,0,4);
@@ -88,6 +99,7 @@ public class CustomerUI extends Application{
         phoneNumerIn.setPrefSize(300,20);
         grid.add(phoneNumerIn,1,4);
 
+        /*Location + Selection*/
         Label locationLabel = new Label("Select the location:");
         grid.add(locationLabel,0,5);
 
@@ -97,11 +109,14 @@ public class CustomerUI extends Application{
         location.setVisible(true);
         location.setPrefSize(300,20);
         grid.add(location,1,5);
-
+        
+        
+        /*Book button*/
         Button bookBut = new Button("Book now!");
         bookBut.setPrefSize(300,20);
         grid.add(bookBut,0,6);
 
+        /*Button to cancel page*/
         Button cancelBut = new Button("Cancel reservation");
         cancelBut.setPrefSize(300,20);
         grid.add(cancelBut,1,6);
@@ -112,7 +127,8 @@ public class CustomerUI extends Application{
         GridPane cancelGrid = new GridPane();
         cancelGrid.setVgap(1.5);
         cancelGrid.setAlignment(Pos.TOP_CENTER);
-
+        
+         /*Name + Input*/
         Label cancelName = new Label("Enter your name:");
         cancelName.setPrefSize(200,20);
         cancelName.setAlignment(Pos.BASELINE_LEFT);
@@ -122,6 +138,7 @@ public class CustomerUI extends Application{
         cancellingNameIn.setAlignment(Pos.BASELINE_LEFT);
         cancelGrid.add(cancellingNameIn,1,0);
 
+         /*Phone Number + Input */
         Label cancellingPhoneNumber = new Label("Enter your phone number:");
         cancellingPhoneNumber.setAlignment(Pos.BASELINE_RIGHT);
         cancellingPhoneNumber.setPrefSize(200,20);
@@ -130,7 +147,8 @@ public class CustomerUI extends Application{
         cancellingPhoneNumberIn.setPrefSize(200,20);
         cancellingPhoneNumber.setAlignment(Pos.BASELINE_LEFT);
         cancelGrid.add(cancellingPhoneNumberIn,1,1);
-
+        
+        /*Returns to original booking page*/
         Button backToBookPage = new Button("Return to booking page");
         backToBookPage.setPrefSize(200,20);
         cancelGrid.add(backToBookPage,0,2);
