@@ -58,7 +58,8 @@ public class Restaurant{
     public ArrayList<Bill> getBills(){return bills;}
     
     public void addBill(double price){
-        Bill newBill = new Bill(0, dishes ,price, new ReservationDate("Str"));
+        ArrayList<Dish> emptydishes = new ArrayList<>();
+        Bill newBill = new Bill(0, emptydishes ,price, new ReservationDate("Str"));
         bills.add(newBill);
     }
 
