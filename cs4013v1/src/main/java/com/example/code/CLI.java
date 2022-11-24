@@ -38,7 +38,7 @@ public class CLI {//add return to last page
                 signInPage();
                 blocked = false;
             } else if (userType.equals("2")) {
-                customerBookingPage();
+                customerChoisesPages();
                 blocked = false;
             }
             System.out.println("Invalid input");
@@ -122,7 +122,7 @@ public class CLI {//add return to last page
             return;
         }
         if(cancelIndex < 1 || cancelIndex >= 10){
-            restaurant.cancelReservation(cancelIndex - 1);
+            restaurant.cancelReservation(resIds[cancelIndex - 1]);
         }
     }
 
@@ -164,8 +164,6 @@ public class CLI {//add return to last page
 
             System.out.println("Enter your phone number");
             String phoneNumberIn = in.nextLine();
-
-
             try {
                 int noP = numPeople(numPplIn);
                 ReservationDate date = new ReservationDate(dateIn);
@@ -179,6 +177,7 @@ public class CLI {//add return to last page
             }
         }
     }
+
     public void signInPage() throws IOException {
         Employee signedIn = null;
         boolean blocked = true;
@@ -263,7 +262,7 @@ public class CLI {//add return to last page
     public void waiterPage() throws IOException {//add make order
         boolean blocked = true;
         while (blocked) {
-            System.out.println("0)Exit. 1)Deliver order. 2)Take walk-in. 3)Take payment");//add take order
+            System.out.println("0)Exit. 1)Deliver order. 2)Take walk-in. 3)Take payment. 4)Make Order");//add take order
             String waiterChoice = in.nextLine();
             if (waiterChoice.equals("0")) {
                 throw new IOException("System closed");
@@ -349,10 +348,46 @@ public class CLI {//add return to last page
                 }catch(NumberFormatException ex){
                     System.out.println();
                 }
-
-                //for(Order o: kitchen.getDeliverdOrders()){
-                //    System.out.println(o.getBill().toString());
-                //}
+            } else if(waiterChoice.equals("4")){
+                boolean orderLoop = true;
+                ArrayList<Dish> dishes = new ArrayList<>();
+                while(orderLoop) {
+                    int i = 1;
+                    for (MenuCatagory cat : restaurant.getMenu()) {
+                        System.out.println(i + ") " + cat.getCatagoryName());
+                        i++;
+                    }
+                    System.out.println("Select a catagory. R)Return C)Confirm order");
+                    String catagorySel = in.nextLine();
+                    if(catagorySel.equals("R")){
+                        break;
+                    }
+                    if(catagorySel.equals("C")){
+                        System.out.println("Select the table paying");
+                        int tableSel = getPhoneNo(in.nextLine());
+                        if(!dishes.isEmpty()){
+                            restaurant.makeOrder(tableSel,dishes);
+                        }else{
+                            System.out.println("no dishes to add to the order");
+                        }
+                    }
+                    try {
+                        i = 1;
+                        int catSelIndex = numPeople(catagorySel);
+                        MenuCatagory menCat = restaurant.getMenu().get(catSelIndex - 1);
+                        for (String s : menCat.getCatagoryString()) {
+                            System.out.println(i + ") " + s);
+                        }
+                        System.out.println("Select a dish");
+                        String dishSel = in.nextLine();
+                        int dishSelIndex = numPeople(dishSel);
+                        dishes.add(new Dish(menCat.getDishName(dishSelIndex - 1),menCat.getDishPrice(dishSelIndex - 1)));
+                    } catch (IOException ex) {
+                        System.out.println("Invalid input");
+                    }
+                }
+            }else{
+                System.out.println("invalid input");
             }
         }
     }
