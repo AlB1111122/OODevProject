@@ -55,6 +55,12 @@ public class Restaurant{
         }
         return unpaid;
     }
+    public ArrayList<Bill> getBills(){return bills;}
+    
+    public void addBill(double price){
+        Bill newBill = new Bill(0, dishes ,price, new ReservationDate("Str"));
+        bills.add(newBill);
+    }
 
     public ArrayList<MenuCatagory> getMenu() {
         return menu;
@@ -87,6 +93,10 @@ public class Restaurant{
 
     public void addTable(int seats){
         Table newTable = new Table(seats, tables.size() + 1);
+        tables.add(newTable);
+    }
+    public void addTableId(int id){
+        Table newTable = new Table(tables.size() + 2, id);
         tables.add(newTable);
     }
 
