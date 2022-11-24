@@ -28,7 +28,13 @@ public class Bill {
 
     private ArrayList<Dish> order = new ArrayList<>();
 
-
+    /**
+     * construcs a new bill
+     * @param tableID adds the table the id is for
+     * @param order adds the dishes being orderd
+     * @param price the price of the dish
+     * @param date the date the bill was paid on
+     */
     Bill(int tableID,ArrayList<Dish> order, double price, ReservationDate date) {
         for (Dish dish : order) {
             price += dish.getPrice();
@@ -38,34 +44,63 @@ public class Bill {
         this.date = date;
     }
 
+    /**
+     * adds the price and the tip to and returns the total
+     * @return double of the total amount to be paid
+     */
     private double totalDue() {
         double totalCost;
         totalCost = price + (price * tipPercent);
         return totalCost;
     }
 
+    /**
+     * allows a customer to pay the bill
+     * @param tipPercent the amount the customer wants to tip
+     * @param isCash boolean that determes if the bill was paid by cash or card
+     */
     public void payBill(int tipPercent,boolean isCash){
         this.tipPercent = tipPercent;
         this.isCash = isCash;
         this.isPaid = true;
     }
 
+    /**
+     * sets the price of the bill
+     * @param price the price you want to change the price too
+     */
     public void setPrice(int price) {
         this.price = price;
     }
 
+    /**
+     * returns the price of the dishes in the bill
+     * @return the price of the dishes in the bill
+     */
     public double getPrice() {
         return price;
     }
 
+    /**
+     * sets the % of the tip
+     * @param tipPercent sets the % of the tip that it is being set to
+     */
     public void setTipPercent(int tipPercent){
         this.tipPercent = tipPercent;
     }
 
+    /**
+     * returns the % of the tip
+     * @return the % of the tip
+     */
     public int getTipPercent(){
         return tipPercent;
     }
 
+    /**
+     * sets wether the bill was paid in cash or card
+     * @param cash boolean value representing if the bill was paid in cash
+     */
     public void setCash(boolean cash){
         this.isCash = cash;
     }
@@ -74,10 +109,18 @@ public class Bill {
         this.isPaid = isPaid;
     }
 
+    /**
+     * returns the table the bill is for
+     * @return the tables ID
+     */
     public int getTableID() {
         return tableID;
     }
 
+    /**
+     * returns weather or not the bill has been paid
+     * @return boolean value representing weather or not the bill has been paid
+     */
     public boolean getIsPaid(){
         return isPaid;
     }

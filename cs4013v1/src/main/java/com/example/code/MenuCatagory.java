@@ -8,6 +8,10 @@ public class MenuCatagory {
     private ArrayList<Double> dishPrices = new ArrayList<>();
     private ArrayList<String> dishesString = new ArrayList<>();
 
+    /**
+     * construcs a new menu catagory with only a specified name
+     * @param catagoryName the name of the menu catagory
+     */
     MenuCatagory(String catagoryName){
         this.catagoryName = catagoryName;
     }

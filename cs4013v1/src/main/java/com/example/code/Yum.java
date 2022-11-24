@@ -18,7 +18,7 @@ public class Yum{
     }
 
     public ArrayList<String> getRestrauntLocations(){
-        ArrayList<String> locs= new ArrayList<>();
+        ArrayList<String> locs = new ArrayList<>();
         for(Restaurant r:restaurants){
             locs.add(r.getLocation());
         }

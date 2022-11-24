@@ -30,6 +30,10 @@ public class Kitchen {
         return ords;
     }
 
+    /**
+     * returnes the orders that hve been deliverd
+     * @return ArrayList of the deliverd orders
+     */
     public ArrayList<Order> getDeliverdOrders() {
         return deliverdOrders;
     }

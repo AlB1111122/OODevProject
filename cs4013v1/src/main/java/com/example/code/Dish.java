@@ -20,13 +20,22 @@ public class Dish{
 
     private String notes;
 
-
+    /**
+     * creates a new dish
+     * @param name the name of the dish
+     * @param  price of the dish
+     */
     Dish(String name,double price){
         dishName = name;
         this.price = price;
         ready = false;
     }
-
+    /**
+     * creates a new dish with nots for the cheffs
+     * @param name the name of the dish
+     * @param  price of the dish
+     * @param notes notes on how the dish should be prepared
+     */
     Dish(String name,double price, String notes){
         dishName = name;
         this.price = price;
@@ -34,6 +43,10 @@ public class Dish{
         this.notes = notes;
     }
 
+    /**
+     * seats the orderID the dish is asociated with
+     * @param orderId identifier order
+     */
     public void setOrderId(int orderId) {
         this.orderId = orderId;
     }
@@ -46,14 +59,25 @@ public class Dish{
         return dishName;
     }
 
+    /**
+     * returns the price of the dish
+     * @return double representing the dishes price
+     */
     public double getPrice() {
         return price;
     }
 
+    /**
+     * resturns a boolean representing if the recipie is cooked
+     * @return boolean value of ready
+     */
     public boolean isReady() {
         return ready;
     }
 
+    /**
+     * sets the dish to ready
+     */
     public void setReady(){
         ready = true;
     }
@@ -62,6 +86,10 @@ public class Dish{
         return String.format("Dish: %s, Price: %.2f",dishName,price);
     }
 
+    /**
+     * returns a string with additional information to be used for the staff
+     * @return string giving important information for the staff to know
+     */
     public String toKitchenString(){
         return String.format("Order: %d, Dish: %s\n%s ",orderId,dishName,notes);
     }

@@ -20,6 +20,13 @@ public class Order{
     private ArrayList<Dish> dishes = new ArrayList<Dish>();
     private boolean ready;
     private Bill bill;
+
+    /**
+     * constructs a new order
+     * @param orderId the identifying number for the order
+     * @param tableID the identifying number for the table who made the order
+     * @param dishes the dishes being ordered
+     */
     Order(int orderId, int tableID,ArrayList<Dish> dishes){
         this.orderId = orderId;
         this.tableID = tableID;
@@ -43,10 +50,19 @@ public class Order{
         dishes.add(dish);
         dish.setOrderId(orderId);
     }
+
+    /**
+     * returd the dishes in the order
+     * @return ArrayList of the dishes in the order
+     */
     public ArrayList<Dish> getDishes() {
         return dishes;
     }
 
+    /**
+     * checks if each of the dishes in the order are ready and if so sets order to ready and makes a new bill associated wiith the order
+     * @return
+     */
     public boolean getReady() {
         if (!ready) {
             for (Dish d : dishes) {
@@ -65,10 +81,18 @@ public class Order{
         return ready;
     }
 
+    /**
+     * returns the bill associates with the order
+     * @return bill asociated for this order
+     */
     public Bill getBill() {
         return bill;
     }
 
+    /**
+     * returns a string to be used internaly by staff
+     * @return String representing the order
+     */
     public String toKitchenString() {
         if(ready) {
             return String.format("ORDER%d\nTable: %d\nReady",orderId,tableID);

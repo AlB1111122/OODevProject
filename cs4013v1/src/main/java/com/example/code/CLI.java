@@ -1,16 +1,15 @@
 package com.example.code;
 
+import com.example.code.calender.Reservation;
 import com.example.code.calender.ReservationDate;
 import com.example.code.calender.ReservationTime;
-import javafx.event.ActionEvent;
-
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class CLI {
+public class CLI {//add return to last page
     Yum yum;
     Restaurant restaurant;
 
@@ -39,10 +38,145 @@ public class CLI {
                 signInPage();
                 blocked = false;
             } else if (userType.equals("2")) {
-                //customerBookingPage();
+                customerBookingPage();
                 blocked = false;
             }
             System.out.println("Invalid input");
+        }
+    }
+
+    public void customerChoisesPages() throws IOException {
+        boolean blocked = true;
+        while(blocked){
+            System.out.println("0)Exit 1)Make a booking. 2)Cancel a booking");
+            String cusSelect = in.nextLine();
+            if(cusSelect.equals("1")){
+                customerBookingPage();
+            }else if(cusSelect.equals("2")){
+                cancelBookingPage();
+            } else if (cusSelect.equals("0")) {
+                throw new IOException("System closed");
+            }else{
+                System.out.println("Invalid input");
+            }
+        }
+    }
+
+    public void cancelBookingPage(){
+        boolean blocked = true;
+        int selection = 0;
+        while (blocked) {
+            System.out.println("Select a location");
+            int i = 1;
+            for (String s : yum.getRestrauntLocations()) {
+                System.out.println(i + ")" + s);
+            }
+            String locationIn = in.nextLine();
+            try {
+                selection = Integer.parseInt(locationIn);
+                if (selection > 0 && selection <= yum.getRestrauntLocations().size()) {
+                    blocked = false;
+                } else {
+                    System.out.println("Invalid input");
+                }
+            } catch (NumberFormatException ex) {
+                System.out.println("Invalid input");
+            }
+        }
+        String customerId = "";
+        blocked = true;
+        while(blocked){
+            System.out.println("Enter your name");
+            String nameIn = in.nextLine();
+
+            System.out.println("Enter your phone number");
+            String phoneNumberIn = in.nextLine();
+
+            String name = "";
+            int phNo = 0;
+            try {
+                name = getName(nameIn);
+                phNo = getPhoneNo(phoneNumberIn);
+                customerId = restaurant.getCustomerId(name,phNo);
+                blocked = false;
+            }catch(IOException ex){
+                System.out.println(ex.getMessage());
+            }
+        }
+        int i = 1;
+        int[] resIds = new int[10];
+        for(Reservation r:restaurant.getReservations()){
+            if(r.getCustomerId().equals(customerId)){
+                System.out.print(i + ")" + r.toString());
+                resIds[i - 1] = r.getReservationId();
+                i++;
+            }
+        }
+        System.out.println("Seclect the reservation you want to cancel");
+        String resCancel = in.nextLine();
+        int cancelIndex = 0;
+        try {
+            cancelIndex = getPhoneNo(resCancel);
+        } catch (IOException e) {
+            System.out.println("Invalid input");
+            return;
+        }
+        if(cancelIndex < 1 || cancelIndex >= 10){
+            restaurant.cancelReservation(cancelIndex - 1);
+        }
+    }
+
+    public void customerBookingPage() {
+        boolean blocked = true;
+        int selection = 0;
+        while (blocked) {
+            System.out.println("Select a location");
+            int i = 1;
+            for (String s : yum.getRestrauntLocations()) {
+                System.out.println(i + ")" + s);
+            }
+            String locationIn = in.nextLine();
+            try {
+                selection = Integer.parseInt(locationIn);
+                if (selection > 0 && selection <= yum.getRestrauntLocations().size()) {
+                    blocked = false;
+                } else {
+                    System.out.println("Invalid input");
+                }
+            } catch (NumberFormatException ex) {
+                System.out.println("Invalid input");
+            }
+        }
+        restaurant = yum.getResturaunt(selection - 1);
+        blocked = true;
+        while (blocked) {
+            System.out.println("Enter the number of people you wish to book for");
+            String numPplIn = in.nextLine();
+
+            System.out.println("Enter the date you wish to book for");
+            String dateIn = in.nextLine();
+
+            System.out.println("Enter the time you wish to book for");
+            String timeIn = in.nextLine();
+
+            System.out.println("Enter your name");
+            String nameIn = in.nextLine();
+
+            System.out.println("Enter your phone number");
+            String phoneNumberIn = in.nextLine();
+
+
+            try {
+                int noP = numPeople(numPplIn);
+                ReservationDate date = new ReservationDate(dateIn);
+                ReservationTime time = new ReservationTime(timeIn);
+                String name = getName(nameIn);
+                int phNo = getPhoneNo(phoneNumberIn);
+                System.out.println(restaurant.addReservation(noP, date, time, phNo, name));
+                blocked = false;
+            }catch(IOException ex){
+                System.out.println(ex.getMessage());
+            }
         }
     }
     public void signInPage() throws IOException {
@@ -126,10 +260,10 @@ public class CLI {
         }
     }
 
-    public void waiterPage() throws IOException {
+    public void waiterPage() throws IOException {//add make order
         boolean blocked = true;
         while (blocked) {
-            System.out.println("0)Exit. 1)Deliver order. 2)Take walk-in. 3)Take payment");
+            System.out.println("0)Exit. 1)Deliver order. 2)Take walk-in. 3)Take payment");//add take order
             String waiterChoice = in.nextLine();
             if (waiterChoice.equals("0")) {
                 throw new IOException("System closed");
