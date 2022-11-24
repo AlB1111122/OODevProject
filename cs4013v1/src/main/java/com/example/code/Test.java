@@ -143,7 +143,7 @@ public class Test {
         int currentBills = 0;
         Scanner billScan = null;
 
-        Restaurant r = new Restaurant(1, "LuckyLimerick");
+        
 
 
         // Try to find directory

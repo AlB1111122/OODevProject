@@ -43,6 +43,10 @@ public class Bill {
         this.isPaid = false;
         this.date = date;
     }
+    
+    public int getBillTableID(){
+        return tableID;
+    }
 
     /**
      * adds the price and the tip to and returns the total
@@ -71,6 +75,10 @@ public class Bill {
      */
     public void setPrice(int price) {
         this.price = price;
+    }
+    
+    public double getBillPrice() {
+        return price;
     }
 
     /**
