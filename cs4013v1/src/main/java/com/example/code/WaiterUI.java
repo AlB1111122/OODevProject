@@ -33,6 +33,11 @@ public class WaiterUI extends Application {
     private TextField phoneNumerIn = new TextField();
     private TextField tipIn = new TextField();
     private Label dateTakenInfo = new Label("");
+
+    private String billString;
+    private Label billTotal = new Label(billString);
+
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -190,6 +195,13 @@ public class WaiterUI extends Application {
         calculateBill.setPrefSize(300,25);
         billGrid.add(calculateBill, 0,3);
 
+       billTotal.setPrefSize(300,20);
+        billGrid.add(billTotal,0,4);
+
+        Button payBill =  new Button ("Pay bill");
+        payBill.setPrefSize(300,25);
+        billGrid.add(payBill, 0,5);
+
 
         //actions
         //home
@@ -216,12 +228,16 @@ public class WaiterUI extends Application {
         calculateBill.setOnAction(actionEvent -> {
             ArrayList<String> ord = new ArrayList<>();
             for(Order o: kitchen.getReadyOrders()){
-                o.getBill();
-
+               billString = o.getBill().toString();
             }
-
-
         });
+
+        payBill.setOnAction(actionEvent -> {
+            ArrayList<String> order = new ArrayList<>();
+            for(Order o: kitchen.getReadyOrders()){
+                o.getBill().setIsPaid(true);
+
+            }});
 
         primaryStage.setScene(home);
         primaryStage.show();
