@@ -91,7 +91,7 @@ public class ReservationDate implements Comparable{
     * @return 0 if the dates are the same or -1
     */
    @Override
-   public int compareTo(Object o) {
+   public int compareTo(Object o) {//fix later to add greater than or lessthan
       if(this.toString().compareTo(o.toString()) == 0){
          return 0;
       }else{
